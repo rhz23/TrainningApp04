@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="nomes_tipo_fisico">
+        <item>@string/endomorfo</item>
+        <item>@string/mesomorfo</item>
+        <item>@string/ecotomorfo</item>
+        <item></item>
+    </string-array>
+
+    <string-array name="imagens_tipo_fisico">
+        <item>@drawable/endomorfo</item>
+        <item>@drawable/mesomorfo</item>
+        <item>@drawable/ectomorfo</item>
+    </string-array>
+    
+    <string-array name="nomes_exercicios">
+        <item>@string/abdominal</item>
+        <item>@string/agachamento_bulgaro</item>
+        <item>@string/cadeira_extensora</item>
+        <item>@string/cadeira_flexora</item>
+        <item>@string/crossover</item>
+        <item>@string/crucifixo_halter</item>
+        <item>@string/desenvolvimento_halter</item>
+        <item>@string/elevacao_frontal_barra</item>
+        <item>@string/elevacao_lateral_cabo</item>
+        <item>@string/levantamento_terra</item>
+        <item>@string/panturrilha_maquina</item>
+        <item>@string/panturrilha_sentado</item>
+        <item>@string/puxada</item>
+        <item>@string/remada_cabo</item>
+        <item>@string/remada_halter</item>
+        <item>@string/remada_livre</item>
+        <item>@string/rosca_concentrada</item>
+        <item>@string/rosca_martelo</item>
+        <item>@string/rosca_scot_barra_reta</item>
+        <item>@string/supino_barra</item>
+        <item>@string/triceps_corda</item>
+        <item>@string/triceps_frances_halter</item>
+        <item>@string/triceps_maquina</item>
+        <item>@string/triceps_testa_halter</item>
+    </string-array>
+
+    <integer-array name="grupos_musculares_exercicios">
+        <item>6</item>
+        <item>4</item>
+        <item>4</item>
+        <item>4</item>
+        <item>7</item>
+        <item>7</item>
+        <item>1</item>
+        <item>1</item>
+        <item>1</item>
+        <item>4</item>
+        <item>5</item>
+        <item>5</item>
+        <item>0</item>
+        <item>0</item>
+        <item>0</item>
+        <item>0</item>
+        <item>3</item>
+        <item>3</item>
+        <item>3</item>
+        <item>7</item>
+        <item>2</item>
+        <item>2</item>
+        <item>2</item>
+        <item>2</item>
+    </integer-array>
+
+    <string-array name="imagens_exercicios">
+        <item>@drawable/abdominal_apoiado</item>
+        <item>@drawable/agachamento_bulgaro</item>
+        <item>@drawable/cadeira_extensora</item>
+        <item>@drawable/cadeira_flexora</item>
+        <item>@drawable/crossover</item>
+        <item>@drawable/crucifixo_halter</item>
+        <item>@drawable/desenvolvimento_halter</item>
+        <item>@drawable/elevacao_frontal_barra</item>
+        <item>@drawable/elevacao_lateral_cabo</item>
+        <item>@drawable/levantamento_terra</item>
+        <item>@drawable/panturrilha_maquina</item>
+        <item>@drawable/panturrilha_sentado</item>
+        <item>@drawable/puxada</item>
+        <item>@drawable/remada_cabo</item>
+        <item>@drawable/remada_halter</item>
+        <item>@drawable/remada_livre</item>
+        <item>@drawable/rosca_concentrada</item>
+        <item>@drawable/rosca_martelo</item>
+        <item>@drawable/rosca_scot_barra_reta</item>
+        <item>@drawable/supino_barra</item>
+        <item>@drawable/triceps_corda</item>
+        <item>@drawable/triceps_frances_halter</item>
+        <item>@drawable/triceps_maquina</item>
+        <item>@drawable/triceps_testa_halter</item>
+    </string-array>
+
+    <integer-array name="equipamentos_utilizados_exercicios">
+        <item>0</item>
+        <item>1</item>
+        <item>4</item>
+        <item>4</item>
+        <item>3</item>
+        <item>1</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>2</item>
+        <item>4</item>
+        <item>4</item>
+        <item>4</item>
+        <item>3</item>
+        <item>1</item>
+        <item>2</item>
+        <item>2</item>
+        <item>2</item>
+        <item>2</item>
+        <item>2</item>
+        <item>3</item>
+        <item>1</item>
+        <item>4</item>
+        <item>1</item>
+    </integer-array>
+
+    <integer-array name="dificuldades_exercicios">
+        <item>0</item>
+        <item>1</item>
+        <item>0</item>
+        <item>0</item>
+        <item>3</item>
+        <item>1</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>2</item>
+        <item>0</item>
+        <item>0</item>
+        <item>0</item>
+        <item>3</item>
+        <item>1</item>
+        <item>2</item>
+        <item>2</item>
+        <item>2</item>
+        <item>2</item>
+        <item>2</item>
+        <item>3</item>
+        <item>1</item>
+        <item>0</item>
+        <item>1</item>
+    </integer-array>
+
+
+</resources>
