@@ -83,5 +83,9 @@
     <string name="novo">Novo</string>
     <string name="sobre">Sobre</string>
     <string name="pelo_menos_um_dia_semana_selecionado">pelo menos um dia da semana deve ser selecionado!</string>
+    <string name="adicionar">Adicionar</string>
+    <string name="cadastro_de_treino">Cadastro de Treino</string>
+    <string name="criar_novo_treino">Criar Novo Treino</string>
+    <string name="alterar_treino">Alterar Treino</string>
 
 </resources>

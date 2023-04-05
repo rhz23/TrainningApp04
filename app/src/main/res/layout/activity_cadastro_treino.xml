@@ -137,9 +137,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
+            android:layout_marginBottom="8dp"
             android:text="@string/add"
-            app:layout_constraintEnd_toEndOf="parent"
-            tools:layout_editor_absoluteY="246dp" />
+            app:layout_constraintBottom_toTopOf="@+id/scrollViewExerciciosSelecionados"
+            app:layout_constraintEnd_toEndOf="parent" />
 
         <TextView
             android:id="@+id/textViewRepeticoes"
@@ -199,9 +200,10 @@
             android:id="@+id/buttonSalvarTreino"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="4dp"
             android:text="@string/salvar"
+            app:layout_constraintEnd_toStartOf="@+id/buttonLimpar"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/radioGroupObjetivo" />
 
@@ -209,9 +211,22 @@
             android:id="@+id/buttonCancelarTreino"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
+            android:onClick="cancelar"
             android:text="@string/cancelar"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/buttonLimpar"
+            app:layout_constraintTop_toTopOf="@+id/buttonSalvarTreino" />
+
+        <Button
+            android:id="@+id/buttonLimpar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="limparCampos"
+            android:text="@string/limpar"
+            app:layout_constraintEnd_toStartOf="@+id/buttonCancelarTreino"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/buttonSalvarTreino"
             app:layout_constraintTop_toTopOf="@+id/buttonSalvarTreino" />
 
     </android.support.constraint.ConstraintLayout>

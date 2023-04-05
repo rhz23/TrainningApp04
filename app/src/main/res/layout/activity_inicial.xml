@@ -15,15 +15,16 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonNovoTreino"
+        app:layout_constraintTop_toBottomOf="@+id/buttonAdicionarTreino"
         tools:listitem="@layout/adapter_exercicio_listview" />
 
     <Button
-        android:id="@+id/buttonNovoTreino"
+        android:id="@+id/buttonAdicionarTreino"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        android:text="@string/novo"
+        android:onClick="novoTreino"
+        android:text="@string/adicionar"
         app:layout_constraintEnd_toStartOf="@+id/buttonSobre"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -33,10 +34,11 @@
         android:id="@+id/buttonSobre"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:onClick="sobre"
         android:text="@string/sobre"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/buttonNovoTreino"
-        app:layout_constraintTop_toTopOf="@+id/buttonNovoTreino" />
+        app:layout_constraintStart_toEndOf="@+id/buttonAdicionarTreino"
+        app:layout_constraintTop_toTopOf="@+id/buttonAdicionarTreino" />
 
 </android.support.constraint.ConstraintLayout>

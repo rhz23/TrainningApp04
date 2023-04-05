@@ -3,9 +3,10 @@ package com.rzaninelli.trainningapp.entities;
 import com.rzaninelli.trainningapp.entities.enums.DiasDaSemana;
 import com.rzaninelli.trainningapp.entities.enums.Objetivos;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Treino {
+public class Treino implements Serializable {
 
     private String nome;
     private List<DiasDaSemana> diasDeTreino;
@@ -62,5 +63,10 @@ public class Treino {
 
     public void setObjetivos(Objetivos objetivos) {
         this.objetivos = objetivos;
+    }
+
+    public void addDiaDaSemana(DiasDaSemana diaDaSemana) {
+        if (!diasDeTreino.contains(diaDaSemana))
+        diasDeTreino.add(diaDaSemana);
     }
 }
