@@ -4,20 +4,22 @@ import com.rzaninelli.trainningapp.entities.enums.DiasDaSemana;
 import com.rzaninelli.trainningapp.entities.enums.Objetivos;
 
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.List;
 
 public class Treino implements Serializable {
 
     private String nome;
-    private List<DiasDaSemana> diasDeTreino;
+    private HashSet<DiasDaSemana> diasDeTreino;
     private List<Exercicio> exerciciosDoTreino;
     private String repeticoes;
     private Objetivos objetivos;
 
     public Treino(){
+        diasDeTreino = new HashSet<>();
     }
 
-    public Treino(String nome, List<DiasDaSemana> diasDeTreino, List<Exercicio> exerciciosDoTreino, String repeticoes, Objetivos objetivos) {
+    public Treino(String nome, HashSet<DiasDaSemana> diasDeTreino, List<Exercicio> exerciciosDoTreino, String repeticoes, Objetivos objetivos) {
         this.nome = nome;
         this.diasDeTreino = diasDeTreino;
         this.exerciciosDoTreino = exerciciosDoTreino;
@@ -33,11 +35,11 @@ public class Treino implements Serializable {
         this.nome = nome;
     }
 
-    public List<DiasDaSemana> getDiasDeTreino() {
+    public HashSet<DiasDaSemana> getDiasDeTreino() {
         return diasDeTreino;
     }
 
-    public void setDiasDeTreino(List<DiasDaSemana> diasDeTreino) {
+    public void setDiasDeTreino(HashSet<DiasDaSemana> diasDeTreino) {
         this.diasDeTreino = diasDeTreino;
     }
 
@@ -66,7 +68,7 @@ public class Treino implements Serializable {
     }
 
     public void addDiaDaSemana(DiasDaSemana diaDaSemana) {
-        if (!diasDeTreino.contains(diaDaSemana))
+
         diasDeTreino.add(diaDaSemana);
     }
 }

@@ -1,5 +1,6 @@
 package com.rzaninelli.trainningapp.activities;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -7,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ListView;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -16,9 +18,9 @@ import com.rzaninelli.trainningapp.adapters.ExercicioAdapter;
 import com.rzaninelli.trainningapp.entities.Exercicio;
 import com.rzaninelli.trainningapp.entities.Treino;
 import com.rzaninelli.trainningapp.entities.enums.DiasDaSemana;
+import com.rzaninelli.trainningapp.entities.enums.Objetivos;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class CadastroTreinoActivity extends AppCompatActivity {
@@ -27,12 +29,14 @@ public class CadastroTreinoActivity extends AppCompatActivity {
     public static final String TREINO = "TREINO";
     public static final int NOVO_TREINO = 1;
     public static final int ALTERAR_TREINO = 2;
+    private static final int REQUEST_CODE_TREINO_SELECIONADO = 3;
 
     private TextView editTextTreinoNome, editTextRepeticoes;
 
     private CheckBox checkBoxSegunda, checkBoxTerca, checkBoxQuarta, checkBoxQuinta, checkBoxSexta, checkBoxSabado, checkBoxDomingo;
 
     private RadioGroup radioGroupObjetivo;
+    private RadioButton radioButtonForca, radioButtonResistencia, radioButtonHipertrofia;
 
     private ListView listViewExerciciosSelecionados;
 
@@ -50,6 +54,15 @@ public class CadastroTreinoActivity extends AppCompatActivity {
         intent.putExtra(MODO, NOVO_TREINO);
         activity.startActivityForResult(intent, NOVO_TREINO);
 
+    }
+
+    public static void alterarTreino(AppCompatActivity activity, Treino treino) {
+
+        Intent intent = new Intent(activity, CadastroTreinoActivity.class);
+        intent.putExtra(MODO, ALTERAR_TREINO);
+        intent.putExtra(TREINO, treino);
+
+        activity.startActivityForResult(intent, ALTERAR_TREINO);
     }
 
 
@@ -70,6 +83,9 @@ public class CadastroTreinoActivity extends AppCompatActivity {
         checkBoxDomingo = findViewById(R.id.checkBoxDomingo);
 
         radioGroupObjetivo = findViewById(R.id.radioGroupObjetivo);
+        radioButtonForca = findViewById(R.id.radioButtonForça);
+        radioButtonResistencia = findViewById(R.id.radioButtonResistencia);
+        radioButtonHipertrofia = findViewById(R.id.radioButtonHipertrofia);
 
         listViewExerciciosSelecionados = findViewById(R.id.listViewExerciciosSelecionados);
 
@@ -95,9 +111,8 @@ public class CadastroTreinoActivity extends AppCompatActivity {
                 preencherCampos(treinoOriginal);
                 setTitle(getString(R.string.alterar_treino));
             }
-
         }
-
+        editTextTreinoNome.requestFocus();
     }
 
     private void preencherCampos(Treino treinoOriginal) {
@@ -119,13 +134,12 @@ public class CadastroTreinoActivity extends AppCompatActivity {
         if (treinoOriginal.getDiasDeTreino().contains(DiasDaSemana.DOMINGO))
             checkBoxDomingo.setChecked(true);
 
-        if (treinoOriginal.getObjetivos().equals(R.id.radioButtonForça))
-            radioGroupObjetivo.check(R.id.radioButtonForça);
-        if (treinoOriginal.getObjetivos().equals(R.id.radioButtonHipertrofia))
-            radioGroupObjetivo.check(R.id.radioButtonHipertrofia);
-        if (treinoOriginal.getObjetivos().equals(R.id.radioButtonResistencia))
-            radioGroupObjetivo.check(R.id.radioButtonResistencia);
-
+        if (treinoOriginal.getObjetivos().indice() == 0)
+            radioButtonForca.setChecked(true);
+        if (treinoOriginal.getObjetivos().indice() == 1)
+            radioButtonResistencia.setChecked(true);
+        if (treinoOriginal.getObjetivos().indice() == 2)
+            radioButtonHipertrofia.setChecked(true);
 
         exerciciosSelecionados = treinoOriginal.getExerciciosDoTreino();
     }
@@ -138,6 +152,9 @@ public class CadastroTreinoActivity extends AppCompatActivity {
     }
 
     public void addTreino(View view) {
+
+        Intent intent = new Intent(this, ListExerciciosActivity.class);
+        startActivityForResult(intent, REQUEST_CODE_TREINO_SELECIONADO);
 
     }
 
@@ -191,6 +208,7 @@ public class CadastroTreinoActivity extends AppCompatActivity {
             Toast.makeText(this, mensagem, Toast.LENGTH_LONG).show();
             if (primeiroCampoFaltante != null)
                 primeiroCampoFaltante.requestFocus();
+            return;
         }
         else {
             Treino novoTreino = new Treino();
@@ -198,7 +216,7 @@ public class CadastroTreinoActivity extends AppCompatActivity {
             novoTreino.setNome(editTextTreinoNome.getText().toString());
             
             novoTreino.setRepeticoes(editTextRepeticoes.getText().toString());
-            
+
             if (checkBoxSegunda.isChecked())
                 novoTreino.addDiaDaSemana(DiasDaSemana.SEGUNDA);
             if (checkBoxTerca.isChecked())
@@ -214,10 +232,35 @@ public class CadastroTreinoActivity extends AppCompatActivity {
             if (checkBoxDomingo.isChecked())
                 novoTreino.addDiaDaSemana(DiasDaSemana.DOMINGO);
             
-            //// TODO: 04/04/2023 - verificar melhor forma de fazer essa parte 
-            novoTreino.setObjetivos(radioGroupObjetivo.getCheckedRadioButtonId());
-            
-            Toast.makeText(this, R.string.cadastro_efetuado_com_sucesso, Toast.LENGTH_LONG).show();
+//            if (radioGroupObjetivo.getCheckedRadioButtonId() == R.id.radioButtonForça)
+//                novoTreino.setObjetivos(Objetivos.FORCA);
+//            if (radioGroupObjetivo.getCheckedRadioButtonId() == R.id.radioButtonHipertrofia)
+//                novoTreino.setObjetivos(Objetivos.HIPERTROFIA);
+//            if (radioGroupObjetivo.getCheckedRadioButtonId() == R.id.radioButtonResistencia)
+//                novoTreino.setObjetivos(Objetivos.RESISTENCIA);
+
+            int objetivoInt = radioGroupObjetivo.getCheckedRadioButtonId();
+            switch (objetivoInt) {
+                case R.id.radioButtonForça:
+                    novoTreino.setObjetivos(Objetivos.FORCA);
+                    break;
+                case R.id.radioButtonHipertrofia:
+                    novoTreino.setObjetivos(Objetivos.HIPERTROFIA);
+                    break;
+                case R.id.radioButtonResistencia:
+                    novoTreino.setObjetivos(Objetivos.RESISTENCIA);
+                    break;
+            }
+
+            if (modo == ALTERAR_TREINO) {
+                treinoOriginal = novoTreino;
+            }
+
+            Intent intent = new Intent();
+            intent.putExtra(TREINO, novoTreino);
+
+            setResult(Activity.RESULT_OK, intent);
+            finish();
         }
 
     }

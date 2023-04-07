@@ -201,6 +201,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
+            android:onClick="salvarCadastro"
             android:text="@string/salvar"
             app:layout_constraintEnd_toStartOf="@+id/buttonLimpar"
             app:layout_constraintHorizontal_bias="0.5"

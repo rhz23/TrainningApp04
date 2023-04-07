@@ -6,7 +6,9 @@ import com.rzaninelli.trainningapp.entities.enums.Dificuldade;
 import com.rzaninelli.trainningapp.entities.enums.EquipamentoUtilizado;
 import com.rzaninelli.trainningapp.entities.enums.GrupoMuscular;
 
-public class Exercicio {
+import java.io.Serializable;
+
+public class Exercicio implements Serializable {
 
     private String nome;
     private GrupoMuscular grupoMuscular;

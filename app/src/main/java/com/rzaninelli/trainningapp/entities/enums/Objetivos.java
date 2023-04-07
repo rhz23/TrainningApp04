@@ -2,8 +2,16 @@ package com.rzaninelli.trainningapp.entities.enums;
 
 public enum Objetivos {
 
-    //// TODO: 04/04/2023 - alterar para trabalhar com chave valor 
-    FORCA,
-    HIPERTROFIA,
-    RESISTENCIA;
+    FORCA(1),
+    HIPERTROFIA(2),
+    RESISTENCIA(3);
+
+    private int index;
+    public int indice() {
+        return index;
+    }
+    private Objetivos(int indice) {
+        index = indice;
+    }
+
 }

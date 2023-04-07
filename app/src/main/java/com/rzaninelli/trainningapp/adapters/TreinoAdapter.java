@@ -45,11 +45,11 @@ public class TreinoAdapter extends BaseAdapter {
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
 
-        TreinoAdapter.TreinoHolder treinoHolder;
+        TreinoHolder treinoHolder;
 
         if (view == null) {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            view = inflater.inflate(R.layout.adapter_exercicio_listview, viewGroup, false);
+            view = inflater.inflate(R.layout.adapter_treino, viewGroup, false);
 
             treinoHolder = new TreinoHolder();
 
