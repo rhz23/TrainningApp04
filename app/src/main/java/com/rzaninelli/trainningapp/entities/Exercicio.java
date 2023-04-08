@@ -12,9 +12,11 @@ public class Exercicio implements Serializable {
 
     private String nome;
     private GrupoMuscular grupoMuscular;
-    private Drawable imagemExercicio;
+    private transient Drawable imagemExercicio;
     private EquipamentoUtilizado equipamentoUtilizado;
     private Dificuldade dificuldade;
+    
+    private int imagemExercicioRef;
 
     public Exercicio() {
     }
@@ -64,5 +66,13 @@ public class Exercicio implements Serializable {
 
     public void setDificuldade(Dificuldade dificuldade) {
         this.dificuldade = dificuldade;
+    }
+
+    public int getImagemExercicioRef() {
+        return imagemExercicioRef;
+    }
+
+    public void setImagemExercicioRef(int imagemExercicioRef) {
+        this.imagemExercicioRef = imagemExercicioRef;
     }
 }

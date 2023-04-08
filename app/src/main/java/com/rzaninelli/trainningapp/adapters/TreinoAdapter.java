@@ -67,5 +67,4 @@ public class TreinoAdapter extends BaseAdapter {
 
         return view;
     }
-    
 }

@@ -10,7 +10,6 @@ import android.widget.TextView;
 
 import com.rzaninelli.trainningapp.R;
 import com.rzaninelli.trainningapp.entities.Exercicio;
-import com.rzaninelli.trainningapp.entities.TipoFisico;
 
 import java.util.List;
 

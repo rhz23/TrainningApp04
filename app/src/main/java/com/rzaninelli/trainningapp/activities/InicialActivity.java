@@ -72,8 +72,6 @@ public class InicialActivity extends AppCompatActivity {
 
     public void novoTreino(View view) {
         CadastroTreinoActivity.novoTreino(this);
-//        Intent intent = new Intent(this, CadastroTreinoActivity.class);
-//        startActivity(intent);
     }
 
     public void sobre(View view) {
@@ -88,9 +86,6 @@ public class InicialActivity extends AppCompatActivity {
         if (resultCode == Activity.RESULT_OK) {
 
             if (data != null && data.hasExtra(TREINO)){
-
-//                Bundle bundle = data.getExtras();
-//                Treino treinoRetornado = (Treino) bundle.getSerializable(TREINO);
 
                 Treino treinoRetornado = (Treino) data.getSerializableExtra(TREINO);
 

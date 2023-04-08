@@ -2,7 +2,9 @@ package com.rzaninelli.trainningapp.activities;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.res.TypedArray;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -27,9 +29,11 @@ public class CadastroTreinoActivity extends AppCompatActivity {
 
     public static final String MODO = "MODO";
     public static final String TREINO = "TREINO";
+    public static final String EXERCICIO_SELECIONADO = "EXERCICIO_SELECIONADO";
+    public static final String POSICAO_EXERCICIO = "POSICAO_EXERCICIO";
     public static final int NOVO_TREINO = 1;
     public static final int ALTERAR_TREINO = 2;
-    private static final int REQUEST_CODE_TREINO_SELECIONADO = 3;
+    private static final int REQUEST_CODE_EXERCICIO_SELECIONADO = 3;
 
     private TextView editTextTreinoNome, editTextRepeticoes;
 
@@ -40,13 +44,16 @@ public class CadastroTreinoActivity extends AppCompatActivity {
 
     private ListView listViewExerciciosSelecionados;
 
-    private List<Exercicio> exerciciosSelecionados;
+    private List<Exercicio> exerciciosSelecionados = new ArrayList<>();
 
     private Button buttonAdd, buttonSalvarTreino, buttonCancelarTreino;
 
     private int modo;
 
     private Treino treinoOriginal;
+    private Treino novoTreino;
+
+    private ExercicioAdapter exercicioAdapter;
 
     public static void novoTreino(AppCompatActivity activity) {
 
@@ -93,15 +100,12 @@ public class CadastroTreinoActivity extends AppCompatActivity {
         buttonSalvarTreino = findViewById(R.id.buttonSalvarTreino);
         buttonCancelarTreino = findViewById(R.id.buttonCancelarTreino);
 
-        if (exerciciosSelecionados != null && !exerciciosSelecionados.isEmpty()){
-            popularListaExerciciosSelecionados();
-        }
-
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
 
         if (bundle != null) {
             modo = bundle.getInt(MODO, NOVO_TREINO);
+            novoTreino = new Treino();
 
             if (modo == NOVO_TREINO){
                 setTitle(getString(R.string.criar_novo_treino));
@@ -118,7 +122,11 @@ public class CadastroTreinoActivity extends AppCompatActivity {
     private void preencherCampos(Treino treinoOriginal) {
 
         editTextTreinoNome.setText(treinoOriginal.getNome());
+        novoTreino.setNome(treinoOriginal.getNome());
+
         editTextRepeticoes.setText(treinoOriginal.getRepeticoes());
+        novoTreino.setRepeticoes(treinoOriginal.getRepeticoes());
+
         if (treinoOriginal.getDiasDeTreino().contains(DiasDaSemana.SEGUNDA))
             checkBoxSegunda.setChecked(true);
         if (treinoOriginal.getDiasDeTreino().contains(DiasDaSemana.TERCA))
@@ -134,6 +142,8 @@ public class CadastroTreinoActivity extends AppCompatActivity {
         if (treinoOriginal.getDiasDeTreino().contains(DiasDaSemana.DOMINGO))
             checkBoxDomingo.setChecked(true);
 
+        novoTreino.setDiasDeTreino(treinoOriginal.getDiasDeTreino());
+
         if (treinoOriginal.getObjetivos().indice() == 0)
             radioButtonForca.setChecked(true);
         if (treinoOriginal.getObjetivos().indice() == 1)
@@ -141,21 +151,46 @@ public class CadastroTreinoActivity extends AppCompatActivity {
         if (treinoOriginal.getObjetivos().indice() == 2)
             radioButtonHipertrofia.setChecked(true);
 
-        exerciciosSelecionados = treinoOriginal.getExerciciosDoTreino();
+        novoTreino.setObjetivos(treinoOriginal.getObjetivos());
+
+        novoTreino.setExerciciosDoTreino(treinoOriginal.getExerciciosDoTreino());
+
+        popularListaExerciciosSelecionados(novoTreino);
     }
 
-    private void popularListaExerciciosSelecionados() {
+    private void popularListaExerciciosSelecionados(Treino treino) {
 
-        ExercicioAdapter exercicioAdapter = new ExercicioAdapter(this, exerciciosSelecionados);
+        TypedArray imagensExercicios = getResources().obtainTypedArray(R.array.imagens_exercicios);
+        List<Exercicio> exerciciosCarregados = treino.getExerciciosDoTreino();
+        for (Exercicio x: exerciciosCarregados) {
+            x.setImagemExercicio(imagensExercicios.getDrawable(x.getImagemExercicioRef()));
+        }
+        exercicioAdapter = new ExercicioAdapter(this, exerciciosCarregados);
         listViewExerciciosSelecionados.setAdapter(exercicioAdapter);
+        exercicioAdapter.notifyDataSetChanged();
 
     }
 
-    public void addTreino(View view) {
+    public void addExercicio(View view) {
 
         Intent intent = new Intent(this, ListExerciciosActivity.class);
-        startActivityForResult(intent, REQUEST_CODE_TREINO_SELECIONADO);
+        startActivityForResult(intent, REQUEST_CODE_EXERCICIO_SELECIONADO);
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == REQUEST_CODE_EXERCICIO_SELECIONADO && resultCode == RESULT_OK) {
+
+            if (data != null && data.hasExtra(EXERCICIO_SELECIONADO)) {
+
+                Exercicio exercicioSelecionado = (Exercicio) data.getSerializableExtra(EXERCICIO_SELECIONADO);
+                novoTreino.addExercicioDoTreino(exercicioSelecionado);
+                popularListaExerciciosSelecionados(novoTreino);
+            }
+        }
     }
 
     public void limparCampos(View view) {
@@ -211,7 +246,6 @@ public class CadastroTreinoActivity extends AppCompatActivity {
             return;
         }
         else {
-            Treino novoTreino = new Treino();
             
             novoTreino.setNome(editTextTreinoNome.getText().toString());
             
@@ -231,13 +265,6 @@ public class CadastroTreinoActivity extends AppCompatActivity {
                 novoTreino.addDiaDaSemana(DiasDaSemana.SABADO);
             if (checkBoxDomingo.isChecked())
                 novoTreino.addDiaDaSemana(DiasDaSemana.DOMINGO);
-            
-//            if (radioGroupObjetivo.getCheckedRadioButtonId() == R.id.radioButtonForça)
-//                novoTreino.setObjetivos(Objetivos.FORCA);
-//            if (radioGroupObjetivo.getCheckedRadioButtonId() == R.id.radioButtonHipertrofia)
-//                novoTreino.setObjetivos(Objetivos.HIPERTROFIA);
-//            if (radioGroupObjetivo.getCheckedRadioButtonId() == R.id.radioButtonResistencia)
-//                novoTreino.setObjetivos(Objetivos.RESISTENCIA);
 
             int objetivoInt = radioGroupObjetivo.getCheckedRadioButtonId();
             switch (objetivoInt) {

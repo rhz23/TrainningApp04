@@ -1,12 +1,15 @@
 package com.rzaninelli.trainningapp.activities;
 
+import static com.rzaninelli.trainningapp.activities.CadastroTreinoActivity.EXERCICIO_SELECIONADO;
+import static com.rzaninelli.trainningapp.activities.CadastroTreinoActivity.POSICAO_EXERCICIO;
+
+import android.content.Intent;
 import android.content.res.TypedArray;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.rzaninelli.trainningapp.R;
 import com.rzaninelli.trainningapp.adapters.ExercicioAdapter;
@@ -22,6 +25,8 @@ public class ListExerciciosActivity extends AppCompatActivity {
     private ListView listViewExercicios;
     private ArrayList<Exercicio> exercicios;
 
+    private int posicaoSelecionada = -1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,15 +34,20 @@ public class ListExerciciosActivity extends AppCompatActivity {
 
         listViewExercicios = findViewById(R.id.listViewExercicios);
 
-        listViewExercicios.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+        listViewExercicios.setOnItemClickListener(
+                new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+                        posicaoSelecionada = position;
+                        Exercicio exercicioSelecionado = (Exercicio) listViewExercicios.getItemAtPosition(posicaoSelecionada);
+                        Intent resultIntent = new Intent();
+                        resultIntent.putExtra(EXERCICIO_SELECIONADO, exercicioSelecionado);
+                        resultIntent.putExtra(POSICAO_EXERCICIO, posicaoSelecionada);
+                        setResult(RESULT_OK, resultIntent);
 
-                Exercicio exercicioSelecionado = (Exercicio) listViewExercicios.getItemAtPosition(position);
-
-                Toast.makeText(getApplicationContext(), getString(R.string.o_exercicio) + exercicioSelecionado.getNome() + getString(R.string.foi_clicado), Toast.LENGTH_LONG).show();
-            }
-        });
+                        finish();
+                    }
+                });
         
         popularListaExercicios();
     }
@@ -66,6 +76,7 @@ public class ListExerciciosActivity extends AppCompatActivity {
             exercicio.setEquipamentoUtilizado(equipamentoUtilizados[equipamentosUtilizados_posicao[cont]]);
             exercicio.setDificuldade(dificuldades[dificuldades_posicao[cont]]);
             exercicio.setImagemExercicio(imagensExercicios.getDrawable(cont));
+            exercicio.setImagemExercicioRef(cont);
 
             exercicios.add(exercicio);
         }

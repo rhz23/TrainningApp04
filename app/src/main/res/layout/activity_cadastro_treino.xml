@@ -19,6 +19,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:text="@string/nome_treino"
+            android:textSize="16sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -38,6 +39,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:text="@string/dias_semana"
+            android:textSize="16sp"
             app:layout_constraintStart_toStartOf="@+id/editTextTreinoNome"
             app:layout_constraintTop_toBottomOf="@+id/editTextTreinoNome" />
 
@@ -99,29 +101,17 @@
             app:layout_constraintStart_toStartOf="@+id/checkBoxSabado"
             app:layout_constraintTop_toBottomOf="@+id/checkBoxSabado" />
 
-        <ScrollView
-            android:id="@+id/scrollViewExerciciosSelecionados"
+
+        <ListView
+            android:id="@+id/listViewExerciciosSelecionados"
             android:layout_width="0dp"
-            android:layout_height="200dp"
-            android:layout_marginStart="16dp"
+            android:layout_height="220dp"
             android:layout_marginTop="8dp"
-            android:layout_marginEnd="16dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView9">
+            app:layout_constraintTop_toBottomOf="@+id/textView9"
+            tools:listitem="@layout/adapter_exercicio_listview" />
 
-            <ListView
-                android:id="@+id/listViewExerciciosSelecionados"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:listitem="@layout/adapter_exercicio_listview" />
-
-        </ScrollView>
 
         <TextView
             android:id="@+id/textView9"
@@ -129,6 +119,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:text="@string/exercicios"
+            android:textSize="16sp"
             app:layout_constraintStart_toStartOf="@+id/checkBoxQuinta"
             app:layout_constraintTop_toBottomOf="@+id/checkBoxQuinta" />
 
@@ -138,18 +129,19 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="8dp"
+            android:onClick="addExercicio"
             android:text="@string/add"
-            app:layout_constraintBottom_toTopOf="@+id/scrollViewExerciciosSelecionados"
+            app:layout_constraintBottom_toTopOf="@+id/listViewExerciciosSelecionados"
             app:layout_constraintEnd_toEndOf="parent" />
 
         <TextView
             android:id="@+id/textViewRepeticoes"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
             android:text="@string/repeticoes"
-            app:layout_constraintStart_toStartOf="@+id/scrollViewExerciciosSelecionados"
-            app:layout_constraintTop_toBottomOf="@+id/scrollViewExerciciosSelecionados" />
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="@+id/listViewExerciciosSelecionados"
+            app:layout_constraintTop_toBottomOf="@+id/listViewExerciciosSelecionados" />
 
         <EditText
             android:id="@+id/editTextRepeticoes"
@@ -166,6 +158,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:text="@string/objetivo"
+            android:textSize="16sp"
             app:layout_constraintStart_toStartOf="@+id/editTextRepeticoes"
             app:layout_constraintTop_toBottomOf="@+id/editTextRepeticoes" />
 
