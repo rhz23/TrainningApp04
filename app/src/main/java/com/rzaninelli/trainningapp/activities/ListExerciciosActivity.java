@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+
 import com.rzaninelli.trainningapp.R;
 import com.rzaninelli.trainningapp.adapters.ExercicioAdapter;
 import com.rzaninelli.trainningapp.entities.Exercicio;

@@ -5,9 +5,8 @@ import static com.rzaninelli.trainningapp.activities.CadastroTreinoActivity.TREI
 
 import android.app.Activity;
 import android.content.Intent;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -81,11 +80,12 @@ public class InicialActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
 
         if (resultCode == Activity.RESULT_OK) {
 
-            if (data != null && data.hasExtra(TREINO)){
+            if (data != null && data.hasExtra(TREINO)) {
 
                 Treino treinoRetornado = (Treino) data.getSerializableExtra(TREINO);
 
@@ -95,8 +95,7 @@ public class InicialActivity extends AppCompatActivity {
                     atualizarDadosTreinoSelecionado(treino, treinoRetornado);
 
                     posicaoSelecionada = -1;
-                }
-                else {
+                } else {
                     treinos.add(treinoRetornado);
                 }
                 treinoAdapter.notifyDataSetChanged();

@@ -15,6 +15,7 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
 import com.rzaninelli.trainningapp.R;
 import com.rzaninelli.trainningapp.adapters.ExercicioAdapter;
 import com.rzaninelli.trainningapp.entities.Exercicio;
@@ -289,10 +290,15 @@ public class CadastroTreinoActivity extends AppCompatActivity {
             setResult(Activity.RESULT_OK, intent);
             finish();
         }
-
     }
 
     public void cancelar(View view) {
+        finish();
+    }
+
+    @Override
+    public void onBackPressed() {
+        setResult(Activity.RESULT_CANCELED);
         finish();
     }
 

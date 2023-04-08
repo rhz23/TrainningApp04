@@ -14,6 +14,7 @@
  import android.widget.TextView;
  import android.widget.Toast;
 
+
  import com.rzaninelli.trainningapp.R;
  import com.rzaninelli.trainningapp.adapters.TipoFisicoAdapter;
  import com.rzaninelli.trainningapp.entities.TipoFisico;
