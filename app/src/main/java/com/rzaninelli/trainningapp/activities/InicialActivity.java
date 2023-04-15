@@ -6,7 +6,10 @@ import static com.rzaninelli.trainningapp.activities.CadastroTreinoActivity.TREI
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -109,5 +112,30 @@ public class InicialActivity extends AppCompatActivity {
         treino.setExerciciosDoTreino(treinoRetornado.getExerciciosDoTreino());
         treino.setRepeticoes(treinoRetornado.getRepeticoes());
         treino.setObjetivos(treinoRetornado.getObjetivos());
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.inicial_opcoes, menu);
+
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        switch (item.getItemId()) {
+
+            case R.id.menuItemAdicionar:
+                novoTreino(this.getCurrentFocus());
+            return true;
+
+            case R.id.menuItemAbout:
+                sobre(this.getCurrentFocus());
+            return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }
