@@ -35,9 +35,6 @@ public class InicialActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inicial);
 
-        buttonAdicionarTreino = findViewById(R.id.buttonAdicionarTreino);
-        buttonSobre = findViewById(R.id.buttonSobre);
-
         listViewTreinoss = findViewById(R.id.listViewTreinos);
 
         listViewTreinoss.setOnItemClickListener(

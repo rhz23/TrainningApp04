@@ -11,35 +11,12 @@
         android:id="@+id/listViewTreinos"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonAdicionarTreino"
+        app:layout_constraintTop_toTopOf="parent"
         tools:listitem="@layout/adapter_exercicio_listview" />
-
-    <Button
-        android:id="@+id/buttonAdicionarTreino"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:onClick="novoTreino"
-        android:text="@string/adicionar"
-        app:layout_constraintEnd_toStartOf="@+id/buttonSobre"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/buttonSobre"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="sobre"
-        android:text="@string/sobre"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/buttonAdicionarTreino"
-        app:layout_constraintTop_toTopOf="@+id/buttonAdicionarTreino" />
 
 </android.support.constraint.ConstraintLayout>

@@ -4,8 +4,11 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.res.TypedArray;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -196,6 +199,8 @@ public class CadastroTreinoActivity extends AppCompatActivity {
 
     public void limparCampos(View view) {
 
+        novoTreino = new Treino();
+
         editTextTreinoNome.setText(null);
         editTextRepeticoes.setText(null);
         checkBoxSegunda.setChecked(false);
@@ -208,7 +213,10 @@ public class CadastroTreinoActivity extends AppCompatActivity {
 
         radioGroupObjetivo.clearCheck();
 
-        exerciciosSelecionados = new ArrayList<>();
+        popularListaExerciciosSelecionados(novoTreino);
+
+//        exerciciosSelecionados = new ArrayList<>();
+//        exercicioAdapter.notifyDataSetChanged();
 
         Toast.makeText(this, R.string.campos_cadastro_foram_limpos, Toast.LENGTH_LONG).show();
     }
@@ -302,4 +310,27 @@ public class CadastroTreinoActivity extends AppCompatActivity {
         finish();
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.cadastro_treino_opcoes, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        switch (item.getItemId()) {
+
+            case R.id.menuItemSalvar:
+                salvarCadastro(this.getCurrentFocus());
+                return true;
+
+            case R.id.menuItemLimpar:
+                limparCampos(this.getCurrentFocus());
+                return true;
+
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
 }
