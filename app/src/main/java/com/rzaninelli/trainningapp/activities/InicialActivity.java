@@ -5,10 +5,13 @@ import static com.rzaninelli.trainningapp.activities.CadastroTreinoActivity.TREI
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.view.ActionMode;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -30,6 +33,59 @@ public class InicialActivity extends AppCompatActivity {
 
     private int posicaoSelecionada = -1;
 
+    private View viewSelecionada;
+
+    private ActionMode actionMode;
+
+    private ActionMode.Callback mActionModeCallback = new ActionMode.Callback() {
+        @Override
+        public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+
+            MenuInflater inflate = mode.getMenuInflater();
+            inflate.inflate(R.menu.inicial_item_selecionado, menu);
+            return true;
+        }
+
+        @Override
+        public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+            return false;
+        }
+
+        @Override
+        public boolean onActionItemClicked(ActionMode mode, MenuItem menuItem) {
+
+            switch (menuItem.getItemId()) {
+
+                case R.id.menuItemEditar:
+                    alterarTreino();
+                    mode.finish();
+                    return true;
+
+                case R.id.menuItemExcluir:
+                    excluirPessoa();
+                    mode.finish();
+                    return true;
+
+                default:
+                    return false;
+            }
+        }
+
+        @Override
+        public void onDestroyActionMode(ActionMode mode) {
+
+            if (viewSelecionada != null) {
+                viewSelecionada.setBackgroundColor(Color.TRANSPARENT);
+            }
+
+            actionMode = null;
+            viewSelecionada = null;
+
+            listViewTreinoss.setEnabled(true);
+
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,15 +102,27 @@ public class InicialActivity extends AppCompatActivity {
                     }
                 });
 
-        listViewTreinoss.setOnItemLongClickListener(
-                new AdapterView.OnItemLongClickListener() {
-                    @Override
-                    public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long id) {
-                        posicaoSelecionada = position;
-                        alterarTreino();
-                        return true;
-                    }
-                });
+        listViewTreinoss.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+
+        listViewTreinoss.setOnItemLongClickListener((parent, view, position, id) -> {
+            if (actionMode != null) {
+                return false;
+            }
+
+            posicaoSelecionada = position;
+
+            view.setBackgroundColor(Color.LTGRAY);
+
+            viewSelecionada = view;
+
+            listViewTreinoss.setEnabled(false);
+
+            actionMode = startSupportActionMode(mActionModeCallback);
+
+            return true;
+
+        });
+
         popularListaTreino();
     }
 
@@ -71,6 +139,11 @@ public class InicialActivity extends AppCompatActivity {
 
     public void novoTreino(View view) {
         CadastroTreinoActivity.novoTreino(this);
+    }
+
+    private void excluirPessoa() {
+        treinos.remove(posicaoSelecionada);
+        treinoAdapter.notifyDataSetChanged();
     }
 
     public void sobre(View view) {

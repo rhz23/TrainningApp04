@@ -30,15 +30,12 @@
             android:parentActivityName=".activities.InicialActivity"
             android:exported="true">
             <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".activities.InicialActivity"
-                />
-            <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
             android:name=".activities.AboutActivity"
+            android:parentActivityName=".activities.InicialActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"

@@ -6,6 +6,7 @@ import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -17,7 +18,6 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
-
 
 import com.rzaninelli.trainningapp.R;
 import com.rzaninelli.trainningapp.adapters.ExercicioAdapter;
@@ -50,7 +50,7 @@ public class CadastroTreinoActivity extends AppCompatActivity {
 
     private List<Exercicio> exerciciosSelecionados = new ArrayList<>();
 
-    private Button buttonAdd, buttonSalvarTreino, buttonCancelarTreino;
+    private Button buttonAdd;
 
     private int modo;
 
@@ -82,6 +82,12 @@ public class CadastroTreinoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastro_treino);
 
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
+
+
         editTextTreinoNome = findViewById(R.id.editTextTreinoNome);
         editTextRepeticoes = findViewById(R.id.editTextRepeticoes);
 
@@ -101,8 +107,6 @@ public class CadastroTreinoActivity extends AppCompatActivity {
         listViewExerciciosSelecionados = findViewById(R.id.listViewExerciciosSelecionados);
 
         buttonAdd = findViewById(R.id.buttonAdd);
-        buttonSalvarTreino = findViewById(R.id.buttonSalvarTreino);
-        buttonCancelarTreino = findViewById(R.id.buttonCancelarTreino);
 
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
@@ -197,7 +201,7 @@ public class CadastroTreinoActivity extends AppCompatActivity {
         }
     }
 
-    public void limparCampos(View view) {
+    public void limparCampos() {
 
         novoTreino = new Treino();
 
@@ -215,21 +219,18 @@ public class CadastroTreinoActivity extends AppCompatActivity {
 
         popularListaExerciciosSelecionados(novoTreino);
 
-//        exerciciosSelecionados = new ArrayList<>();
-//        exercicioAdapter.notifyDataSetChanged();
-
         Toast.makeText(this, R.string.campos_cadastro_foram_limpos, Toast.LENGTH_LONG).show();
     }
 
-    public void salvarCadastro(View view) {
+    public void salvarCadastro() {
         
 
         String mensagem = getString(R.string.os_campos_precisam_ser_preenchidos);
         boolean cadastroIncompleto = false;
         TextView primeiroCampoFaltante = null;
 
-        if (editTextTreinoNome.getText().toString().trim().isEmpty()){
-            mensagem += "\n" + getString(R.string.nome);
+        if (editTextTreinoNome.getText().toString().trim().isEmpty() || editTextTreinoNome == null){
+            mensagem += "\n" + getString(R.string.nome_treino);
             cadastroIncompleto = true;
             primeiroCampoFaltante = editTextTreinoNome;
         }
@@ -247,6 +248,7 @@ public class CadastroTreinoActivity extends AppCompatActivity {
             mensagem += "\n" + getString(R.string.objetivo);
             cadastroIncompleto = true;
         }
+
 
         if (cadastroIncompleto) {
             Toast.makeText(this, mensagem, Toast.LENGTH_LONG).show();
@@ -300,14 +302,14 @@ public class CadastroTreinoActivity extends AppCompatActivity {
         }
     }
 
-    public void cancelar(View view) {
+    public void cancelar() {
+        setResult(Activity.RESULT_CANCELED);
         finish();
     }
 
     @Override
     public void onBackPressed() {
-        setResult(Activity.RESULT_CANCELED);
-        finish();
+        cancelar();
     }
 
     @Override
@@ -322,15 +324,22 @@ public class CadastroTreinoActivity extends AppCompatActivity {
         switch (item.getItemId()) {
 
             case R.id.menuItemSalvar:
-                salvarCadastro(this.getCurrentFocus());
+                salvarCadastro();
                 return true;
 
             case R.id.menuItemLimpar:
-                limparCampos(this.getCurrentFocus());
+                limparCampos();
+                return true;
+
+            case android.R.id.home:
+                cancelar();
                 return true;
 
         }
 
         return super.onOptionsItemSelected(item);
     }
+
+
+
 }

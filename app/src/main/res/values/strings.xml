@@ -87,5 +87,7 @@
     <string name="cadastro_de_treino">Cadastro de Treino</string>
     <string name="criar_novo_treino">Criar Novo Treino</string>
     <string name="alterar_treino">Alterar Treino</string>
+    <string name="editar">Editar</string>
+    <string name="excluir">Excluir</string>
 
 </resources>
