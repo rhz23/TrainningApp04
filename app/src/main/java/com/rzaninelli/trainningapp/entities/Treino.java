@@ -14,6 +14,7 @@ public class Treino implements Serializable {
     private HashSet<DiasDaSemana> diasDeTreino;
     private List<Exercicio> exerciciosDoTreino;
     private String repeticoes;
+    private int grupoMuscularID;
     private Objetivos objetivos;
 
     public Treino(){
@@ -76,5 +77,13 @@ public class Treino implements Serializable {
     public void addDiaDaSemana(DiasDaSemana diaDaSemana) {
 
         diasDeTreino.add(diaDaSemana);
+    }
+
+    public int getGrupoMuscularID() {
+        return grupoMuscularID;
+    }
+
+    public void setGrupoMuscularID(int grupoMuscularID) {
+        this.grupoMuscularID = grupoMuscularID;
     }
 }

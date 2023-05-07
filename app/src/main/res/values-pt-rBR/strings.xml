@@ -88,4 +88,11 @@
     <string name="alterar_treino">Alterar Treino</string>
     <string name="editar">Editar</string>
     <string name="excluir">Excluir</string>
+    <string name="dorsal">Dorsal</string>
+    <string name="deltoide">Deltoide</string>
+    <string name="triceps">Triceps</string>
+    <string name="biceps">Biceps</string>
+    <string name="perna">Perna</string>
+    <string name="panturrilha">Panturrilha</string>
+    <string name="peito">Peito</string>
 </resources>

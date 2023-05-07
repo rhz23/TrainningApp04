@@ -42,7 +42,7 @@
             android:text="@string/dias_semana"
             android:textSize="16sp"
             app:layout_constraintStart_toStartOf="@+id/editTextTreinoNome"
-            app:layout_constraintTop_toBottomOf="@+id/editTextTreinoNome" />
+            app:layout_constraintTop_toBottomOf="@+id/spinnerGrupoMuscular" />
 
         <CheckBox
             android:id="@+id/checkBoxSegunda"
@@ -189,6 +189,23 @@
                 android:layout_height="wrap_content"
                 android:text="@string/resistencia" />
         </RadioGroup>
+
+        <TextView
+            android:id="@+id/textView16"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/grupo_muscular_principal"
+            app:layout_constraintStart_toStartOf="@+id/editTextTreinoNome"
+            app:layout_constraintTop_toBottomOf="@+id/editTextTreinoNome" />
+
+        <Spinner
+            android:id="@+id/spinnerGrupoMuscular"
+            android:layout_width="300dp"
+            android:layout_height="35dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintStart_toStartOf="@+id/textView16"
+            app:layout_constraintTop_toBottomOf="@+id/textView16" />
 
     </android.support.constraint.ConstraintLayout>
 

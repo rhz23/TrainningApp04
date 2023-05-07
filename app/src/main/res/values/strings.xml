@@ -90,5 +90,6 @@
     <string name="excluir">Delete</string>
     <string name="Curso">course</string>
     <string name="dark_mode">Dark Mode</string>
-    <string name="remover">Remover</string>
+    <string name="remover">Remove</string>
+    <string name="grupo_muscular_principal">Muscular Group</string>
 </resources>

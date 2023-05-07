@@ -19,12 +19,17 @@ import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.rzaninelli.trainningapp.R;
 import com.rzaninelli.trainningapp.adapters.ExercicioAdapter;
+import com.rzaninelli.trainningapp.adapters.GrupoMuscularAdapter;
+import com.rzaninelli.trainningapp.adapters.TipoFisicoAdapter;
 import com.rzaninelli.trainningapp.entities.Exercicio;
+import com.rzaninelli.trainningapp.entities.GrupoMuscular;
+import com.rzaninelli.trainningapp.entities.TipoFisico;
 import com.rzaninelli.trainningapp.entities.Treino;
 import com.rzaninelli.trainningapp.entities.enums.DiasDaSemana;
 import com.rzaninelli.trainningapp.entities.enums.Objetivos;
@@ -48,6 +53,8 @@ public class CadastroTreinoActivity extends AppCompatActivity {
 
     private RadioGroup radioGroupObjetivo;
     private RadioButton radioButtonForca, radioButtonResistencia, radioButtonHipertrofia;
+
+    private Spinner spinnerGrupoMuscular;
 
     private ListView listViewExerciciosSelecionados;
 
@@ -106,6 +113,10 @@ public class CadastroTreinoActivity extends AppCompatActivity {
         radioButtonForca = findViewById(R.id.radioButtonForça);
         radioButtonResistencia = findViewById(R.id.radioButtonResistencia);
         radioButtonHipertrofia = findViewById(R.id.radioButtonHipertrofia);
+
+        spinnerGrupoMuscular = findViewById(R.id.spinnerGrupoMuscular);
+
+        popularSpinnerGrupoMuscular();
 
         listViewExerciciosSelecionados = findViewById(R.id.listViewExerciciosSelecionados);
 
@@ -167,6 +178,9 @@ public class CadastroTreinoActivity extends AppCompatActivity {
         novoTreino.setObjetivos(treinoOriginal.getObjetivos());
 
         novoTreino.setExerciciosDoTreino(treinoOriginal.getExerciciosDoTreino());
+
+        spinnerGrupoMuscular.setSelection(treinoOriginal.getGrupoMuscularID());
+        novoTreino.setGrupoMuscularID(treinoOriginal.getGrupoMuscularID());
 
         popularListaExerciciosSelecionados(novoTreino);
     }
@@ -295,6 +309,8 @@ public class CadastroTreinoActivity extends AppCompatActivity {
                     break;
             }
 
+            novoTreino.setGrupoMuscularID(spinnerGrupoMuscular.getSelectedItemPosition());
+
             if (modo == ALTERAR_TREINO) {
                 treinoOriginal = novoTreino;
             }
@@ -341,7 +357,6 @@ public class CadastroTreinoActivity extends AppCompatActivity {
                 return true;
 
         }
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -352,7 +367,6 @@ public class CadastroTreinoActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.exercicios_selecionados_menu_contexto, menu);
     }
 
-
     @Override
     public boolean onContextItemSelected(@NonNull MenuItem item) {
 
@@ -362,23 +376,35 @@ public class CadastroTreinoActivity extends AppCompatActivity {
         switch (item.getItemId()) {
 
             case R.id.menuItemRemover:
-
                 excluir(info.position);
-
                 return true;
 
             default:
                 return super.onContextItemSelected(item);
         }
-
-
     }
 
     private void excluir(int position) {
 
         novoTreino.getExerciciosDoTreino().remove(position);
 
-//        exerciciosSelecionados.remove(position);
         exercicioAdapter.notifyDataSetChanged();
     }
+
+    private void popularSpinnerGrupoMuscular() {
+        String[] nomes = getResources().getStringArray(R.array.nomes_grupo_muscular);
+        TypedArray imagemGrupoMuscular = getResources().obtainTypedArray(R.array.imagens_grupo_muscular);
+
+        ArrayList<GrupoMuscular> gruposMusculares = new ArrayList();
+
+        for (int cont = 0; cont < nomes.length; cont++) {
+            gruposMusculares.add(new GrupoMuscular(nomes[cont], imagemGrupoMuscular.getDrawable(cont)));
+        }
+
+        System.out.println("aqui");
+
+        GrupoMuscularAdapter grupoMuscularAdapter = new GrupoMuscularAdapter(this, gruposMusculares);
+        spinnerGrupoMuscular.setAdapter(grupoMuscularAdapter);
+    }
+
 }

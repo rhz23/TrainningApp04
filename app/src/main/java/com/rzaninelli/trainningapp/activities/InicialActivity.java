@@ -209,6 +209,7 @@ public class InicialActivity extends AppCompatActivity {
         treino.setExerciciosDoTreino(treinoRetornado.getExerciciosDoTreino());
         treino.setRepeticoes(treinoRetornado.getRepeticoes());
         treino.setObjetivos(treinoRetornado.getObjetivos());
+        treino.setGrupoMuscularID(treinoRetornado.getGrupoMuscularID());
     }
 
     @Override

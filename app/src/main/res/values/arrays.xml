@@ -13,6 +13,28 @@
         <item>@drawable/mesomorfo</item>
         <item>@drawable/ectomorfo</item>
     </string-array>
+
+    <string-array name="nomes_grupo_muscular">
+        <item>@string/dorsal</item>
+        <item>@string/deltoide</item>
+        <item>@string/triceps</item>
+        <item>@string/biceps</item>
+        <item>@string/perna</item>
+        <item>@string/panturrilha</item>
+        <item>@string/abdominal</item>
+        <item>@string/peito</item>
+    </string-array>
+
+    <string-array name="imagens_grupo_muscular">
+        <item>@drawable/dorsal</item>
+        <item>@drawable/deltoide</item>
+        <item>@drawable/triceps</item>
+        <item>@drawable/biceps</item>
+        <item>@drawable/perna</item>
+        <item>@drawable/panturrilha</item>
+        <item>@drawable/abdominal</item>
+        <item>@drawable/peito</item>
+    </string-array>
     
     <string-array name="nomes_exercicios">
         <item>@string/abdominal</item>
@@ -150,4 +172,11 @@
     </integer-array>
 
 
+    <string name="dorsal">Back</string>
+    <string name="deltoide">Sholders</string>
+    <string name="triceps">Triceps</string>
+    <string name="biceps">Biceps</string>
+    <string name="perna">Legs</string>
+    <string name="panturrilha">Calves</string>
+    <string name="peito">Chest</string>
 </resources>

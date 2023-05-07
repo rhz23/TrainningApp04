@@ -54,8 +54,8 @@ public class TipoFisicoAdapter extends BaseAdapter {
 
             holder = new TipoFisicoHolder();
 
-            holder.imageViewTipoFisicoImagem = view.findViewById(R.id.imageViewTipoFisicoImagem);
-            holder.textViewTipoFisicoNome = view.findViewById(R.id.textViewTipoFisicoNome);
+            holder.imageViewTipoFisicoImagem = view.findViewById(R.id.imageViewGrupoMuscularImagem);
+            holder.textViewTipoFisicoNome = view.findViewById(R.id.textViewGrupoMuscularNome);
 
             view.setTag(holder);
         }
