@@ -1,10 +1,30 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.TrainningApp" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/purple_200</item>
-        <item name="colorPrimaryDark">@color/purple_700</item>
-        <item name="colorAccent">@color/teal_200</item>
-        <!-- Customize your theme here. -->
+    <attr name="buttonColor" format="color" />
+
+    <style name="Theme.TrainningApp" parent="Theme.AppCompat.DayNight">
+        <!-- Customize light mode theme attributes here -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="buttonColor">@color/black</item>
+        <!-- Add any other theme attributes for light mode here -->
     </style>
+
+    <style name="BACKGROUND">
+        <item name="android:background">@color/dark_gray</item>
+    </style>
+
+    <style name="TEXTCOLOR">
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="BUTTON">
+        <item name="android:backgroundTint">@color/colorPrimary</item>
+    </style>
+
+    <style name="LISTVIEWBACKGROUND">
+        <item name="android:background">@color/dark_gray</item>
+    </style>
+
 </resources>

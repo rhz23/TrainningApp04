@@ -10,4 +10,10 @@
     <item
         android:id="@+id/menuItemAbout"
         android:title="@string/sobre" />
+    <item
+        android:id="@+id/switchButton"
+        android:title="Switch"
+        app:actionViewClass="android.widget.Switch"
+        app:actionLayout="@layout/switch_item"
+        app:showAsAction="always" />
 </menu>

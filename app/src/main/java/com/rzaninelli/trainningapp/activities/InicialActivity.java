@@ -4,19 +4,25 @@ import static com.rzaninelli.trainningapp.activities.CadastroTreinoActivity.ALTE
 import static com.rzaninelli.trainningapp.activities.CadastroTreinoActivity.TREINO;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.view.ActionMode;
+import android.support.v7.widget.SwitchCompat;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.ListView;
+import android.widget.Switch;
 
 import com.rzaninelli.trainningapp.R;
 import com.rzaninelli.trainningapp.adapters.TreinoAdapter;
@@ -26,7 +32,15 @@ import java.util.ArrayList;
 
 public class InicialActivity extends AppCompatActivity {
 
-    private Button buttonAdicionarTreino, buttonSobre;
+    private static final String ARQUIVO = "com.rzaninelli.trainingapp.MODE_PREFERENCES";
+
+    private static final String DARK_MODE = "DARK_MODE";
+
+    private boolean darkMode = false;
+
+    SharedPreferences sharedPreferences;
+    SharedPreferences.Editor editor;
+
     private ListView listViewTreinoss;
     private ArrayList<Treino> treinos;
     private TreinoAdapter treinoAdapter;
@@ -37,17 +51,24 @@ public class InicialActivity extends AppCompatActivity {
 
     private ActionMode actionMode;
 
+    private Switch switchButton;
+
     private ActionMode.Callback mActionModeCallback = new ActionMode.Callback() {
         @Override
         public boolean onCreateActionMode(ActionMode mode, Menu menu) {
 
+            sharedPreferences = getSharedPreferences(ARQUIVO, MODE_PRIVATE);
+            editor = getSharedPreferences(ARQUIVO, MODE_PRIVATE).edit();
+
             MenuInflater inflate = mode.getMenuInflater();
             inflate.inflate(R.menu.inicial_item_selecionado, menu);
+
             return true;
         }
 
         @Override
         public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+
             return false;
         }
 
@@ -62,7 +83,7 @@ public class InicialActivity extends AppCompatActivity {
                     return true;
 
                 case R.id.menuItemExcluir:
-                    excluirPessoa();
+                    excluirTreino();
                     mode.finish();
                     return true;
 
@@ -84,6 +105,7 @@ public class InicialActivity extends AppCompatActivity {
             listViewTreinoss.setEnabled(true);
 
         }
+
     };
 
     @Override
@@ -92,6 +114,8 @@ public class InicialActivity extends AppCompatActivity {
         setContentView(R.layout.activity_inicial);
 
         listViewTreinoss = findViewById(R.id.listViewTreinos);
+
+
 
         listViewTreinoss.setOnItemClickListener(
                 new AdapterView.OnItemClickListener() {
@@ -124,6 +148,9 @@ public class InicialActivity extends AppCompatActivity {
         });
 
         popularListaTreino();
+
+        lerPreferenciaDarkMode();
+
     }
 
     private void popularListaTreino() {
@@ -141,7 +168,7 @@ public class InicialActivity extends AppCompatActivity {
         CadastroTreinoActivity.novoTreino(this);
     }
 
-    private void excluirPessoa() {
+    private void excluirTreino() {
         treinos.remove(posicaoSelecionada);
         treinoAdapter.notifyDataSetChanged();
     }
@@ -187,9 +214,30 @@ public class InicialActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.inicial_opcoes, menu);
-
+        MenuItem item  = menu.findItem(R.id.switchButton);
+        switchButton = (Switch) item.getActionView();
+        switchButton.setChecked(darkMode);
+        switchButton.setOnCheckedChangeListener(
+                new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                        if (switchButton.isChecked())
+                            darkMode = true;
+                        else
+                            darkMode = false;
+                        ativarDarkMode();
+//                        getApplicationContext().setTheme(R.style.Theme_TrainningApp);
+                        salvarPreferenciaDarkMode();
+                        Intent intent = getIntent();
+                        finish();
+                        startActivity(intent);
+                        overridePendingTransition(0,0);
+                    }
+                }
+        );
         return true;
     }
+
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
@@ -208,4 +256,38 @@ public class InicialActivity extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
+
+    private void lerPreferenciaDarkMode() {
+
+        sharedPreferences = getSharedPreferences(ARQUIVO, Context.MODE_PRIVATE);
+        darkMode = sharedPreferences.getBoolean(DARK_MODE, darkMode);
+
+        ativarDarkMode();
+    }
+
+    private void salvarPreferenciaDarkMode() {
+        sharedPreferences = getSharedPreferences(ARQUIVO, Context.MODE_PRIVATE);
+
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        editor.putBoolean(DARK_MODE, darkMode);
+
+        editor.commit();
+
+    }
+
+    private void ativarDarkMode() {
+        if (darkMode == false) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        }
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+
+        return super.onPrepareOptionsMenu(menu);
+    }
 }
+
