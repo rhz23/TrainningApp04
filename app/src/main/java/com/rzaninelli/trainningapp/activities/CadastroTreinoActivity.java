@@ -8,9 +8,12 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Adapter;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ListView;
@@ -125,6 +128,8 @@ public class CadastroTreinoActivity extends AppCompatActivity {
             }
         }
         editTextTreinoNome.requestFocus();
+
+        registerForContextMenu(listViewExerciciosSelecionados);
     }
 
     private void preencherCampos(Treino treinoOriginal) {
@@ -340,6 +345,40 @@ public class CadastroTreinoActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, view, menuInfo);
+
+        getMenuInflater().inflate(R.menu.exercicios_selecionados_menu_contexto, menu);
+    }
 
 
+    @Override
+    public boolean onContextItemSelected(@NonNull MenuItem item) {
+
+        AdapterView.AdapterContextMenuInfo info;
+        info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+
+        switch (item.getItemId()) {
+
+            case R.id.menuItemRemover:
+
+                excluir(info.position);
+
+                return true;
+
+            default:
+                return super.onContextItemSelected(item);
+        }
+
+
+    }
+
+    private void excluir(int position) {
+
+        novoTreino.getExerciciosDoTreino().remove(position);
+
+//        exerciciosSelecionados.remove(position);
+        exercicioAdapter.notifyDataSetChanged();
+    }
 }
