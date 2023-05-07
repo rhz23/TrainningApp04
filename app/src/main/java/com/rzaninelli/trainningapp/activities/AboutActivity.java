@@ -35,7 +35,6 @@ public class AboutActivity extends AppCompatActivity {
             case android.R.id.home:
                 cancelar();
                 return true;
-
         }
 
         return super.onOptionsItemSelected(item);
