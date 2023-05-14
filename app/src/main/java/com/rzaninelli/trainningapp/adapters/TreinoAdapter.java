@@ -63,7 +63,7 @@ public class TreinoAdapter extends BaseAdapter {
         }
 
         treinoHolder.textViewNomeTreino.setText(treinos.get(i).getNome());
-        treinoHolder.textViewObjetivoTreino.setText(treinos.get(i).getObjetivos().toString());
+        treinoHolder.textViewObjetivoTreino.setText(treinos.get(i).getObjetivo().toString());
 
         return view;
     }

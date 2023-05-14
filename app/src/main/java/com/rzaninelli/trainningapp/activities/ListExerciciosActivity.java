@@ -17,7 +17,7 @@ import com.rzaninelli.trainningapp.adapters.ExercicioAdapter;
 import com.rzaninelli.trainningapp.entities.Exercicio;
 import com.rzaninelli.trainningapp.entities.enums.Dificuldade;
 import com.rzaninelli.trainningapp.entities.enums.EquipamentoUtilizado;
-import com.rzaninelli.trainningapp.entities.enums.GrupoMuscular;
+import com.rzaninelli.trainningapp.entities.enums.GrupoMuscularEnum;
 
 import java.util.ArrayList;
 
@@ -61,7 +61,7 @@ public class ListExerciciosActivity extends AppCompatActivity {
         int[] dificuldades_posicao = getResources().getIntArray(R.array.dificuldades_exercicios);
         TypedArray imagensExercicios = getResources().obtainTypedArray(R.array.imagens_exercicios);
 
-        GrupoMuscular[] gruposMusculares = GrupoMuscular.values();
+        GrupoMuscularEnum[] gruposMusculares = GrupoMuscularEnum.values();
         EquipamentoUtilizado[] equipamentoUtilizados = EquipamentoUtilizado.values();
         Dificuldade[] dificuldades = Dificuldade.values();
 
@@ -73,7 +73,7 @@ public class ListExerciciosActivity extends AppCompatActivity {
 
             exercicio = new Exercicio();
             exercicio.setNome(nomes[cont]);
-            exercicio.setGrupoMuscular(gruposMusculares[gruposMusculares_posicao[cont]]);
+            exercicio.setGrupoMuscularEnum(gruposMusculares[gruposMusculares_posicao[cont]]);
             exercicio.setEquipamentoUtilizado(equipamentoUtilizados[equipamentosUtilizados_posicao[cont]]);
             exercicio.setDificuldade(dificuldades[dificuldades_posicao[cont]]);
             exercicio.setImagemExercicio(imagensExercicios.getDrawable(cont));

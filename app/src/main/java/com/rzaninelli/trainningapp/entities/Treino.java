@@ -1,33 +1,56 @@
 package com.rzaninelli.trainningapp.entities;
 
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.ForeignKey;
+import android.arch.persistence.room.Ignore;
+import android.arch.persistence.room.Index;
+import android.arch.persistence.room.PrimaryKey;
+import android.support.annotation.NonNull;
+
 import com.rzaninelli.trainningapp.entities.enums.DiasDaSemana;
-import com.rzaninelli.trainningapp.entities.enums.Objetivos;
+import com.rzaninelli.trainningapp.entities.enums.Objetivo;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
+@Entity(tableName = "treinos", indices = @Index(value = {"nome"}, unique = true))
 public class Treino implements Serializable {
 
+    @PrimaryKey(autoGenerate = true)
+    private int id;
+    @NonNull
     private String nome;
+    @Ignore
     private HashSet<DiasDaSemana> diasDeTreino;
+    @Ignore
     private List<Exercicio> exerciciosDoTreino;
     private String repeticoes;
+    @ForeignKey(entity = GrupoMuscular.class, parentColumns = "id", childColumns = "grupoMuscularId")
     private int grupoMuscularID;
-    private Objetivos objetivos;
+    private Objetivo objetivo;
 
     public Treino(){
         diasDeTreino = new HashSet<>();
         exerciciosDoTreino = new ArrayList<>();
     }
 
-    public Treino(String nome, HashSet<DiasDaSemana> diasDeTreino, List<Exercicio> exerciciosDoTreino, String repeticoes, Objetivos objetivos) {
+    public Treino(String nome, HashSet<DiasDaSemana> diasDeTreino, List<Exercicio> exerciciosDoTreino, String repeticoes, int grupoMuscularID, Objetivo objetivo) {
         this.nome = nome;
         this.diasDeTreino = diasDeTreino;
         this.exerciciosDoTreino = exerciciosDoTreino;
         this.repeticoes = repeticoes;
-        this.objetivos = objetivos;
+        this.grupoMuscularID = grupoMuscularID;
+        this.objetivo = objetivo;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getNome() {
@@ -66,12 +89,12 @@ public class Treino implements Serializable {
         this.repeticoes = repeticoes;
     }
 
-    public Objetivos getObjetivos() {
-        return objetivos;
+    public Objetivo getObjetivo() {
+        return objetivo;
     }
 
-    public void setObjetivos(Objetivos objetivos) {
-        this.objetivos = objetivos;
+    public void setObjetivo(Objetivo objetivo) {
+        this.objetivo = objetivo;
     }
 
     public void addDiaDaSemana(DiasDaSemana diaDaSemana) {
@@ -86,4 +109,5 @@ public class Treino implements Serializable {
     public void setGrupoMuscularID(int grupoMuscularID) {
         this.grupoMuscularID = grupoMuscularID;
     }
+
 }

@@ -4,10 +4,13 @@ import static com.rzaninelli.trainningapp.activities.CadastroTreinoActivity.ALTE
 import static com.rzaninelli.trainningapp.activities.CadastroTreinoActivity.TREINO;
 
 import android.app.Activity;
+import android.arch.lifecycle.LiveData;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -25,10 +28,15 @@ import android.widget.Switch;
 import com.rzaninelli.trainningapp.R;
 import com.rzaninelli.trainningapp.adapters.TreinoAdapter;
 import com.rzaninelli.trainningapp.entities.Treino;
+import com.rzaninelli.trainningapp.persistence.TreinosDatabase;
+import com.rzaninelli.trainningapp.utils.UtilsGUI;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class InicialActivity extends AppCompatActivity {
+
+    private TreinosDatabase treinosDatabase;
 
     private static final String ARQUIVO = "com.rzaninelli.trainingapp.MODE_PREFERENCES";
 
@@ -152,13 +160,32 @@ public class InicialActivity extends AppCompatActivity {
     }
 
     private void popularListaTreino() {
-        treinos = new ArrayList<>();
-        treinoAdapter = new TreinoAdapter(this, treinos);
-        listViewTreinoss.setAdapter(treinoAdapter);
+//        treinos = new ArrayList<>();
+//        treinoAdapter = new TreinoAdapter(this, treinos);
+//        listViewTreinoss.setAdapter(treinoAdapter);
+
+        AsyncTask.execute(() -> {
+            treinosDatabase = TreinosDatabase.getDatabase(InicialActivity.this);
+
+            treinos = (ArrayList<Treino>) treinosDatabase.treinoDao().getTreinos();
+
+            InicialActivity.this.runOnUiThread(() -> {
+                treinoAdapter = new TreinoAdapter(this, treinos);
+
+                listViewTreinoss.setAdapter(treinoAdapter);
+            });
+        });
+
     }
 
+
     private void alterarTreino() {
-        Treino treino = treinos.get(posicaoSelecionada);
+//        Treino treino = treinos.get(posicaoSelecionada);
+
+        treinosDatabase = TreinosDatabase.getDatabase(this);
+
+        Treino treino = treinosDatabase.treinoDao().get(posicaoSelecionada);
+
         CadastroTreinoActivity.alterarTreino(this, treino);
     }
 
@@ -167,6 +194,29 @@ public class InicialActivity extends AppCompatActivity {
     }
 
     private void excluirTreino() {
+
+        Treino treino = treinosDatabase.treinoDao().get(posicaoSelecionada);
+
+        String mensagem = "Deseja realmente apagar treino?" + "\n" + treino.getNome();
+
+        DialogInterface.OnClickListener listener = (dialog, which) -> {
+
+            switch (which) {
+
+                case DialogInterface.BUTTON_POSITIVE:
+                    treinosDatabase.treinoDao().delete(treino);
+
+                    break;
+
+                case DialogInterface.BUTTON_NEGATIVE:
+                    break;
+
+            }
+
+        };
+
+        UtilsGUI.confirmaAcao(this, mensagem, listener);
+
         treinos.remove(posicaoSelecionada);
         treinoAdapter.notifyDataSetChanged();
     }
@@ -206,7 +256,7 @@ public class InicialActivity extends AppCompatActivity {
         treino.setDiasDeTreino(treinoRetornado.getDiasDeTreino());
         treino.setExerciciosDoTreino(treinoRetornado.getExerciciosDoTreino());
         treino.setRepeticoes(treinoRetornado.getRepeticoes());
-        treino.setObjetivos(treinoRetornado.getObjetivos());
+        treino.setObjetivo(treinoRetornado.getObjetivo());
         treino.setGrupoMuscularID(treinoRetornado.getGrupoMuscularID());
     }
 

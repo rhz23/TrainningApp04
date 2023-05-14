@@ -1,31 +1,49 @@
 package com.rzaninelli.trainningapp.entities;
 
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Ignore;
+import android.arch.persistence.room.PrimaryKey;
 import android.graphics.drawable.Drawable;
 
 import com.rzaninelli.trainningapp.entities.enums.Dificuldade;
 import com.rzaninelli.trainningapp.entities.enums.EquipamentoUtilizado;
-import com.rzaninelli.trainningapp.entities.enums.GrupoMuscular;
+import com.rzaninelli.trainningapp.entities.enums.GrupoMuscularEnum;
 
 import java.io.Serializable;
 
+@Entity(tableName = "exercicios_table")
 public class Exercicio implements Serializable {
 
+    @PrimaryKey(autoGenerate = true)
+    private int id;
     private String nome;
-    private GrupoMuscular grupoMuscular;
+    @Ignore
+    private GrupoMuscularEnum grupoMuscularEnum;
+    @Ignore
     private transient Drawable imagemExercicio;
+    @Ignore
     private EquipamentoUtilizado equipamentoUtilizado;
+    @Ignore
     private Dificuldade dificuldade;
-    
+    @Ignore
     private int imagemExercicioRef;
 
     public Exercicio() {
     }
 
-    public Exercicio(String nome, GrupoMuscular grupoMuscular, Drawable imagemExercicio, EquipamentoUtilizado equipamentoUtilizado) {
+    public Exercicio(String nome, GrupoMuscularEnum grupoMuscularEnum, Drawable imagemExercicio, EquipamentoUtilizado equipamentoUtilizado) {
         this.nome = nome;
-        this.grupoMuscular = grupoMuscular;
+        this.grupoMuscularEnum = grupoMuscularEnum;
         this.imagemExercicio = imagemExercicio;
         this.equipamentoUtilizado = equipamentoUtilizado;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getNome() {
@@ -36,12 +54,12 @@ public class Exercicio implements Serializable {
         this.nome = nome;
     }
 
-    public GrupoMuscular getGrupoMuscular() {
-        return grupoMuscular;
+    public GrupoMuscularEnum getGrupoMuscularEnum() {
+        return grupoMuscularEnum;
     }
 
-    public void setGrupoMuscular(GrupoMuscular grupoMuscular) {
-        this.grupoMuscular = grupoMuscular;
+    public void setGrupoMuscularEnum(GrupoMuscularEnum grupoMuscularEnum) {
+        this.grupoMuscularEnum = grupoMuscularEnum;
     }
 
     public Drawable getImagemExercicio() {

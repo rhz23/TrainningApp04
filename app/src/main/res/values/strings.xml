@@ -92,4 +92,9 @@
     <string name="dark_mode">Dark Mode</string>
     <string name="remover">Remove</string>
     <string name="grupo_muscular_principal">Muscular Group</string>
+    <string name="aviso">warning</string>
+    <string name="ok">OK</string>
+    <string name="confirmacao">Confirmation</string>
+    <string name="sim">Yes</string>
+    <string name="nao">NO</string>
 </resources>

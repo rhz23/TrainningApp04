@@ -71,7 +71,7 @@ public class ExercicioAdapter extends BaseAdapter {
 
         exercicioHolder.imageViewExercicioImagem.setImageDrawable(exercicios.get(i).getImagemExercicio());
         exercicioHolder.textViewNomeExercicio.setText(exercicios.get(i).getNome());
-        exercicioHolder.textViewGrupoMuscular.setText(exercicios.get(i).getGrupoMuscular().name());
+        exercicioHolder.textViewGrupoMuscular.setText(exercicios.get(i).getGrupoMuscularEnum().name());
         exercicioHolder.textViewEquipamentoUtilizado.setText(exercicios.get(i).getEquipamentoUtilizado().name());
         exercicioHolder.textViewDificuldade.setText(exercicios.get(i).getDificuldade().name());
 

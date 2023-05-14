@@ -3,6 +3,7 @@ package com.rzaninelli.trainningapp.activities;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.res.TypedArray;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -29,7 +30,8 @@ import com.rzaninelli.trainningapp.entities.Exercicio;
 import com.rzaninelli.trainningapp.entities.GrupoMuscular;
 import com.rzaninelli.trainningapp.entities.Treino;
 import com.rzaninelli.trainningapp.entities.enums.DiasDaSemana;
-import com.rzaninelli.trainningapp.entities.enums.Objetivos;
+import com.rzaninelli.trainningapp.entities.enums.Objetivo;
+import com.rzaninelli.trainningapp.persistence.TreinosDatabase;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -165,14 +167,14 @@ public class CadastroTreinoActivity extends AppCompatActivity {
 
         novoTreino.setDiasDeTreino(treinoOriginal.getDiasDeTreino());
 
-        if (treinoOriginal.getObjetivos().indice() == 0)
+        if (treinoOriginal.getObjetivo().getIndice() == 0)
             radioButtonForca.setChecked(true);
-        if (treinoOriginal.getObjetivos().indice() == 1)
+        if (treinoOriginal.getObjetivo().getIndice() == 1)
             radioButtonResistencia.setChecked(true);
-        if (treinoOriginal.getObjetivos().indice() == 2)
+        if (treinoOriginal.getObjetivo().getIndice() == 2)
             radioButtonHipertrofia.setChecked(true);
 
-        novoTreino.setObjetivos(treinoOriginal.getObjetivos());
+        novoTreino.setObjetivo(treinoOriginal.getObjetivo());
 
         novoTreino.setExerciciosDoTreino(treinoOriginal.getExerciciosDoTreino());
 
@@ -296,21 +298,30 @@ public class CadastroTreinoActivity extends AppCompatActivity {
             int objetivoInt = radioGroupObjetivo.getCheckedRadioButtonId();
             switch (objetivoInt) {
                 case R.id.radioButtonForça:
-                    novoTreino.setObjetivos(Objetivos.FORCA);
+                    novoTreino.setObjetivo(Objetivo.FORCA);
                     break;
                 case R.id.radioButtonHipertrofia:
-                    novoTreino.setObjetivos(Objetivos.HIPERTROFIA);
+                    novoTreino.setObjetivo(Objetivo.HIPERTROFIA);
                     break;
                 case R.id.radioButtonResistencia:
-                    novoTreino.setObjetivos(Objetivos.RESISTENCIA);
+                    novoTreino.setObjetivo(Objetivo.RESISTENCIA);
                     break;
             }
 
             novoTreino.setGrupoMuscularID(spinnerGrupoMuscular.getSelectedItemPosition());
 
-            if (modo == ALTERAR_TREINO) {
-                treinoOriginal = novoTreino;
-            }
+            AsyncTask.execute(() -> {
+                TreinosDatabase database = TreinosDatabase.getDatabase(CadastroTreinoActivity.this);
+
+                if (modo == ALTERAR_TREINO) {
+                    treinoOriginal = novoTreino;
+                    database.treinoDao().update(treinoOriginal);
+                }
+                else {
+                    database.treinoDao().insert(novoTreino);
+                }
+
+            });
 
             Intent intent = new Intent();
             intent.putExtra(TREINO, novoTreino);
