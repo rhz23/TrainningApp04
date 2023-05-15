@@ -11,21 +11,17 @@ import com.rzaninelli.trainningapp.entities.enums.GrupoMuscularEnum;
 
 import java.io.Serializable;
 
-@Entity(tableName = "exercicios_table")
+@Entity(tableName = "exercicios")
 public class Exercicio implements Serializable {
 
     @PrimaryKey(autoGenerate = true)
     private int id;
     private String nome;
-    @Ignore
     private GrupoMuscularEnum grupoMuscularEnum;
     @Ignore
     private transient Drawable imagemExercicio;
-    @Ignore
     private EquipamentoUtilizado equipamentoUtilizado;
-    @Ignore
     private Dificuldade dificuldade;
-    @Ignore
     private int imagemExercicioRef;
 
     public Exercicio() {

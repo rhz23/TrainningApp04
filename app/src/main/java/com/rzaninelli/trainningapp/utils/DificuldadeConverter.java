@@ -3,7 +3,6 @@ package com.rzaninelli.trainningapp.utils;
 import android.arch.persistence.room.TypeConverter;
 
 import com.rzaninelli.trainningapp.entities.enums.Dificuldade;
-import com.rzaninelli.trainningapp.entities.enums.Objetivo;
 
 public class DificuldadeConverter {
 

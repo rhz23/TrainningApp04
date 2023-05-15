@@ -34,6 +34,7 @@ import com.rzaninelli.trainningapp.entities.enums.Objetivo;
 import com.rzaninelli.trainningapp.persistence.TreinosDatabase;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 public class CadastroTreinoActivity extends AppCompatActivity {
@@ -54,6 +55,7 @@ public class CadastroTreinoActivity extends AppCompatActivity {
     private RadioButton radioButtonForca, radioButtonResistencia, radioButtonHipertrofia;
 
     private Spinner spinnerGrupoMuscular;
+    private ArrayList<GrupoMuscular> gruposMusculares;
 
     private ListView listViewExerciciosSelecionados;
 
@@ -64,7 +66,7 @@ public class CadastroTreinoActivity extends AppCompatActivity {
     private int modo;
 
     private Treino treinoOriginal;
-    private Treino novoTreino;
+//    private Treino novoTreino;
 
     private ExercicioAdapter exercicioAdapter;
 
@@ -115,7 +117,7 @@ public class CadastroTreinoActivity extends AppCompatActivity {
 
         spinnerGrupoMuscular = findViewById(R.id.spinnerGrupoMuscular);
 
-        popularSpinnerGrupoMuscular();
+        popularListaGrupoMuscular();
 
         listViewExerciciosSelecionados = findViewById(R.id.listViewExerciciosSelecionados);
 
@@ -126,9 +128,9 @@ public class CadastroTreinoActivity extends AppCompatActivity {
 
         if (bundle != null) {
             modo = bundle.getInt(MODO, NOVO_TREINO);
-            novoTreino = new Treino();
 
             if (modo == NOVO_TREINO){
+                treinoOriginal = new Treino();
                 setTitle(getString(R.string.criar_novo_treino));
             }
             if (modo == ALTERAR_TREINO) {
@@ -145,10 +147,10 @@ public class CadastroTreinoActivity extends AppCompatActivity {
     private void preencherCampos(Treino treinoOriginal) {
 
         editTextTreinoNome.setText(treinoOriginal.getNome());
-        novoTreino.setNome(treinoOriginal.getNome());
+        treinoOriginal.setNome(treinoOriginal.getNome());
 
         editTextRepeticoes.setText(treinoOriginal.getRepeticoes());
-        novoTreino.setRepeticoes(treinoOriginal.getRepeticoes());
+        treinoOriginal.setRepeticoes(treinoOriginal.getRepeticoes());
 
         if (treinoOriginal.getDiasDeTreino().contains(DiasDaSemana.SEGUNDA))
             checkBoxSegunda.setChecked(true);
@@ -165,7 +167,7 @@ public class CadastroTreinoActivity extends AppCompatActivity {
         if (treinoOriginal.getDiasDeTreino().contains(DiasDaSemana.DOMINGO))
             checkBoxDomingo.setChecked(true);
 
-        novoTreino.setDiasDeTreino(treinoOriginal.getDiasDeTreino());
+        treinoOriginal.setDiasDeTreino(treinoOriginal.getDiasDeTreino());
 
         if (treinoOriginal.getObjetivo().getIndice() == 0)
             radioButtonForca.setChecked(true);
@@ -174,14 +176,15 @@ public class CadastroTreinoActivity extends AppCompatActivity {
         if (treinoOriginal.getObjetivo().getIndice() == 2)
             radioButtonHipertrofia.setChecked(true);
 
-        novoTreino.setObjetivo(treinoOriginal.getObjetivo());
+        treinoOriginal.setObjetivo(treinoOriginal.getObjetivo());
 
-        novoTreino.setExerciciosDoTreino(treinoOriginal.getExerciciosDoTreino());
+        treinoOriginal.setExerciciosDoTreino(treinoOriginal.getExerciciosDoTreino());
+
 
         spinnerGrupoMuscular.setSelection(treinoOriginal.getGrupoMuscularID());
-        novoTreino.setGrupoMuscularID(treinoOriginal.getGrupoMuscularID());
+        treinoOriginal.setGrupoMuscularID(treinoOriginal.getGrupoMuscularID());
 
-        popularListaExerciciosSelecionados(novoTreino);
+        popularListaExerciciosSelecionados(treinoOriginal);
     }
 
     private void popularListaExerciciosSelecionados(Treino treino) {
@@ -213,15 +216,15 @@ public class CadastroTreinoActivity extends AppCompatActivity {
             if (data != null && data.hasExtra(EXERCICIO_SELECIONADO)) {
 
                 Exercicio exercicioSelecionado = (Exercicio) data.getSerializableExtra(EXERCICIO_SELECIONADO);
-                novoTreino.addExercicioDoTreino(exercicioSelecionado);
-                popularListaExerciciosSelecionados(novoTreino);
+                treinoOriginal.addExercicioDoTreino(exercicioSelecionado);
+                popularListaExerciciosSelecionados(treinoOriginal);
             }
         }
     }
 
     public void limparCampos() {
 
-        novoTreino = new Treino();
+        treinoOriginal = new Treino();
 
         editTextTreinoNome.setText(null);
         editTextRepeticoes.setText(null);
@@ -235,7 +238,7 @@ public class CadastroTreinoActivity extends AppCompatActivity {
 
         radioGroupObjetivo.clearCheck();
 
-        popularListaExerciciosSelecionados(novoTreino);
+        popularListaExerciciosSelecionados(treinoOriginal);
 
         Toast.makeText(this, R.string.campos_cadastro_foram_limpos, Toast.LENGTH_LONG).show();
     }
@@ -276,55 +279,65 @@ public class CadastroTreinoActivity extends AppCompatActivity {
         }
         else {
             
-            novoTreino.setNome(editTextTreinoNome.getText().toString());
+            treinoOriginal.setNome(editTextTreinoNome.getText().toString());
             
-            novoTreino.setRepeticoes(editTextRepeticoes.getText().toString());
+            treinoOriginal.setRepeticoes(editTextRepeticoes.getText().toString());
+
+            treinoOriginal.setDiasDeTreino(new HashSet<>());
 
             if (checkBoxSegunda.isChecked())
-                novoTreino.addDiaDaSemana(DiasDaSemana.SEGUNDA);
+                treinoOriginal.addDiaDaSemana(DiasDaSemana.SEGUNDA);
             if (checkBoxTerca.isChecked())
-                novoTreino.addDiaDaSemana(DiasDaSemana.TERCA);
+                treinoOriginal.addDiaDaSemana(DiasDaSemana.TERCA);
             if (checkBoxQuarta.isChecked())
-                novoTreino.addDiaDaSemana(DiasDaSemana.QUARTA);
+                treinoOriginal.addDiaDaSemana(DiasDaSemana.QUARTA);
             if (checkBoxQuinta.isChecked())
-                novoTreino.addDiaDaSemana(DiasDaSemana.QUINTA);
+                treinoOriginal.addDiaDaSemana(DiasDaSemana.QUINTA);
             if (checkBoxSexta.isChecked())
-                novoTreino.addDiaDaSemana(DiasDaSemana.SEXTA);
+                treinoOriginal.addDiaDaSemana(DiasDaSemana.SEXTA);
             if (checkBoxSabado.isChecked())
-                novoTreino.addDiaDaSemana(DiasDaSemana.SABADO);
+                treinoOriginal.addDiaDaSemana(DiasDaSemana.SABADO);
             if (checkBoxDomingo.isChecked())
-                novoTreino.addDiaDaSemana(DiasDaSemana.DOMINGO);
+                treinoOriginal.addDiaDaSemana(DiasDaSemana.DOMINGO);
 
             int objetivoInt = radioGroupObjetivo.getCheckedRadioButtonId();
             switch (objetivoInt) {
                 case R.id.radioButtonForça:
-                    novoTreino.setObjetivo(Objetivo.FORCA);
+                    treinoOriginal.setObjetivo(Objetivo.FORCA);
                     break;
                 case R.id.radioButtonHipertrofia:
-                    novoTreino.setObjetivo(Objetivo.HIPERTROFIA);
+                    treinoOriginal.setObjetivo(Objetivo.HIPERTROFIA);
                     break;
                 case R.id.radioButtonResistencia:
-                    novoTreino.setObjetivo(Objetivo.RESISTENCIA);
+                    treinoOriginal.setObjetivo(Objetivo.RESISTENCIA);
                     break;
             }
 
-            novoTreino.setGrupoMuscularID(spinnerGrupoMuscular.getSelectedItemPosition());
+            treinoOriginal.setGrupoMuscularID(spinnerGrupoMuscular.getSelectedItemPosition());
 
             AsyncTask.execute(() -> {
                 TreinosDatabase database = TreinosDatabase.getDatabase(CadastroTreinoActivity.this);
 
                 if (modo == ALTERAR_TREINO) {
-                    treinoOriginal = novoTreino;
-                    database.treinoDao().update(treinoOriginal);
+//                    treinoOriginal = novoTreino;
+                    database.beginTransaction();
+                    database.treinoDao().updateTreinoWithExercicioAndDiasDaSemana(treinoOriginal);
+                    database.setTransactionSuccessful();
+                    database.endTransaction();
                 }
                 else {
-                    database.treinoDao().insert(novoTreino);
+                    database.beginTransaction();
+
+                    database.treinoDao().insertTreinoWithExerciciosAndDiasDaSemana(treinoOriginal);
+
+                    database.setTransactionSuccessful();
+                    database.endTransaction();
                 }
 
             });
 
             Intent intent = new Intent();
-            intent.putExtra(TREINO, novoTreino);
+            intent.putExtra(TREINO, treinoOriginal);
 
             setResult(Activity.RESULT_OK, intent);
             finish();
@@ -394,24 +407,41 @@ public class CadastroTreinoActivity extends AppCompatActivity {
 
     private void excluir(int position) {
 
-        novoTreino.getExerciciosDoTreino().remove(position);
+        treinoOriginal.getExerciciosDoTreino().remove(position);
 
         exercicioAdapter.notifyDataSetChanged();
+    }
+
+    private void popularListaGrupoMuscular() {
+
+        AsyncTask.execute(() -> {
+            TreinosDatabase database = TreinosDatabase.getDatabase(CadastroTreinoActivity.this);
+
+            gruposMusculares = (ArrayList<GrupoMuscular>) database.grupoMuscularDao().queryAll();
+            popularSpinnerGrupoMuscular();
+
+            CadastroTreinoActivity.this.runOnUiThread(() -> {
+                GrupoMuscularAdapter grupoMuscularAdapter = new GrupoMuscularAdapter(this, gruposMusculares);
+
+                spinnerGrupoMuscular.setAdapter(grupoMuscularAdapter);
+            });
+        });
     }
 
     private void popularSpinnerGrupoMuscular() {
         String[] nomes = getResources().getStringArray(R.array.nomes_grupo_muscular);
         TypedArray imagemGrupoMuscular = getResources().obtainTypedArray(R.array.imagens_grupo_muscular);
 
-        ArrayList<GrupoMuscular> gruposMusculares = new ArrayList();
+        ArrayList<GrupoMuscular> gruposMusculares1 = new ArrayList();
 
-        for (int cont = 0; cont < nomes.length; cont++) {
-            gruposMusculares.add(new GrupoMuscular(nomes[cont], imagemGrupoMuscular.getDrawable(cont)));
+        for (GrupoMuscular grupoMuscular: gruposMusculares) {
+            int cont = grupoMuscular.getId()-1;
+
+            grupoMuscular.setNome(nomes[cont]);
+            grupoMuscular.setImagemGrupoMuscular(imagemGrupoMuscular.getDrawable(cont));
         }
 
-        System.out.println("aqui");
-
-        GrupoMuscularAdapter grupoMuscularAdapter = new GrupoMuscularAdapter(this, gruposMusculares);
+        GrupoMuscularAdapter grupoMuscularAdapter = new GrupoMuscularAdapter(this, gruposMusculares1);
         spinnerGrupoMuscular.setAdapter(grupoMuscularAdapter);
     }
 

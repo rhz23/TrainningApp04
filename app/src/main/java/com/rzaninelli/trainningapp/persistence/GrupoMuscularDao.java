@@ -7,7 +7,6 @@ import android.arch.persistence.room.Query;
 import android.arch.persistence.room.Update;
 
 import com.rzaninelli.trainningapp.entities.GrupoMuscular;
-import com.rzaninelli.trainningapp.entities.GrupoMuscular;
 
 import java.util.List;
 
@@ -23,10 +22,10 @@ public interface GrupoMuscularDao {
     @Update
     void update(GrupoMuscular grupoMuscular);
 
-    @Query("SELECT * FROM grupo_muscular WHERE id = :id")
+    @Query("SELECT * FROM grupoMuscular WHERE id = :id")
     GrupoMuscular queryForId(int id);
 
-    @Query("SELECT * FROM grupo_muscular ORDER BY nome ASC")
+    @Query("SELECT * FROM grupoMuscular ORDER BY nome ASC")
     List<GrupoMuscular> queryAll();
-    
+
 }

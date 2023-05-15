@@ -2,7 +2,7 @@ package com.rzaninelli.trainningapp.activities;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
+
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
@@ -28,7 +28,7 @@ public class AboutActivity extends AppCompatActivity {
     }
 
     @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+    public boolean onOptionsItemSelected(MenuItem item) {
 
         switch (item.getItemId()) {
 

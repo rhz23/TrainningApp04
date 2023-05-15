@@ -22,10 +22,10 @@ public interface ExercicioDao {
     @Update
     void update(Exercicio exercicio);
 
-    @Query("SELECT * FROM exercicios_table WHERE id = :id")
+    @Query("SELECT * FROM exercicios WHERE id = :id")
     Exercicio queryForId(int id);
 
-    @Query("SELECT * FROM exercicios_table ORDER BY nome ASC")
+    @Query("SELECT * FROM exercicios ORDER BY nome ASC")
     List<Exercicio> queryAll();
 
 }

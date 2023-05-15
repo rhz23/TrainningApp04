@@ -97,4 +97,5 @@
     <string name="confirmacao">Confirmation</string>
     <string name="sim">Yes</string>
     <string name="nao">NO</string>
+    <string name="confirma_delete">You really want to delete?</string>
 </resources>

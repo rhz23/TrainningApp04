@@ -10,27 +10,24 @@ import android.content.res.TypedArray;
 import android.support.annotation.NonNull;
 
 import com.rzaninelli.trainningapp.R;
-import com.rzaninelli.trainningapp.adapters.ExercicioAdapter;
 import com.rzaninelli.trainningapp.entities.Exercicio;
 import com.rzaninelli.trainningapp.entities.GrupoMuscular;
 import com.rzaninelli.trainningapp.entities.Treino;
-import com.rzaninelli.trainningapp.entities.enums.DiasDaSemana;
+import com.rzaninelli.trainningapp.entities.auxiliares.TreinoDiasDaSemana;
+import com.rzaninelli.trainningapp.entities.auxiliares.TreinoExercicio;
 import com.rzaninelli.trainningapp.entities.enums.Dificuldade;
 import com.rzaninelli.trainningapp.entities.enums.EquipamentoUtilizado;
 import com.rzaninelli.trainningapp.entities.enums.GrupoMuscularEnum;
-import com.rzaninelli.trainningapp.entities.enums.Objetivo;
 import com.rzaninelli.trainningapp.utils.DiasDaSemanaConverter;
 import com.rzaninelli.trainningapp.utils.DificuldadeConverter;
 import com.rzaninelli.trainningapp.utils.EquipamentoUtilizadoConverter;
 import com.rzaninelli.trainningapp.utils.GrupoMuscularEnumConverter;
 import com.rzaninelli.trainningapp.utils.ObjetivoConverter;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-@Database(entities = {Treino.class, Exercicio.class, GrupoMuscular.class}, version = 1, exportSchema = false)
+@Database(entities = {Treino.class, Exercicio.class, TreinoExercicio.class, TreinoDiasDaSemana.class, GrupoMuscular.class}, version = 1, exportSchema = false)
 @TypeConverters({
         DiasDaSemanaConverter.class,
         ObjetivoConverter.class,
@@ -41,9 +38,10 @@ import java.util.concurrent.Executors;
 public abstract class TreinosDatabase extends RoomDatabase {
 
     public abstract TreinoDao treinoDao();
-
     public abstract ExercicioDao exercicioDao();
-
+    public abstract TreinoExercicioDao treinoExercicioDao();
+    public abstract TreinoDiasDaSemanaDao treinoDiasDaSemanaDao();
+    public abstract DiasDaSemanaDao diasDaSemanaDao();
     public abstract GrupoMuscularDao grupoMuscularDao();
 
     private static TreinosDatabase INSTANCE;
@@ -66,6 +64,7 @@ public abstract class TreinosDatabase extends RoomDatabase {
                                 @Override
                                 public void run() {
                                     carregaExerciciosIniciais(context);
+                                    carregaGruposMuscularesIniciais(context);
                                 }
                             });
                         }
@@ -77,6 +76,23 @@ public abstract class TreinosDatabase extends RoomDatabase {
                 }
             }
         return INSTANCE;
+    }
+
+    private static void carregaGruposMuscularesIniciais(Context context) {
+
+        String[] nomes = context.getResources().getStringArray(R.array.nomes_grupo_muscular);
+        TypedArray imagemGrupoMuscular = context.getResources().obtainTypedArray(R.array.imagens_grupo_muscular);
+
+        GrupoMuscular grupoMuscular;
+
+        for (int cont = 0; cont < nomes.length; cont++) {
+
+            grupoMuscular = new GrupoMuscular();
+            grupoMuscular.setNome(nomes[cont]);
+            grupoMuscular.setImagemGrupoMuscular(imagemGrupoMuscular.getDrawable(cont));
+
+            INSTANCE.grupoMuscularDao().insert(grupoMuscular);
+        }
     }
 
     private static void carregaExerciciosIniciais(Context context) {
@@ -92,8 +108,6 @@ public abstract class TreinosDatabase extends RoomDatabase {
         EquipamentoUtilizado[] equipamentoUtilizados = EquipamentoUtilizado.values();
         Dificuldade[] dificuldades = Dificuldade.values();
 
-//        List<Exercicio> exercicios = new ArrayList<>();
-
         Exercicio exercicio;
 
         for (int cont = 0; cont < nomes.length; cont++) {
@@ -108,7 +122,6 @@ public abstract class TreinosDatabase extends RoomDatabase {
 
             INSTANCE.exercicioDao().insert(exercicio);
 
-//            exercicios.add(exercicio);
         }
 
     }
