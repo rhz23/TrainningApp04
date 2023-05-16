@@ -95,4 +95,13 @@
     <string name="perna">Perna</string>
     <string name="panturrilha">Panturrilha</string>
     <string name="peito">Peito</string>
+    <string name="dark_mode">Modo Escuro</string>
+    <string name="remover">Remover</string>
+    <string name="grupo_muscular_principal">Grupo Muscular</string>
+    <string name="aviso">atenção</string>
+    <string name="ok">OK</string>
+    <string name="confirmacao">Confirmação</string>
+    <string name="sim">Sim</string>
+    <string name="nao">Não</string>
+    <string name="confirma_delete">Você realmente deseja deletar?</string>
 </resources>
