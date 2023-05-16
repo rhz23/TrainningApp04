@@ -33,9 +33,6 @@ public interface TreinoDao {
     @Query("SELECT * FROM treinos WHERE treinos.id = :id")
     Treino get(int id);
 
-//    @Query("SELECT * FROM treinos ORDER BY nome ASC")
-//    List<Treino> queryAll();
-
     @Query("SELECT * FROM treinos")
     List<Treino> getTreinos();
 
@@ -86,7 +83,7 @@ public interface TreinoDao {
 
     @Transaction
     default void insertTreinoWithExerciciosAndDiasDaSemana(Treino treino) {
-        long treinoId = insert(treino); // Insert Treino
+        long treinoId = insert(treino);
 
         List<TreinoExercicio> treinoExercicios = new ArrayList<>();
         List<TreinoDiasDaSemana> diasDaSemanaList = new ArrayList<>();
@@ -105,13 +102,13 @@ public interface TreinoDao {
             diasDaSemanaList.add(treinoDiasDaSemana);
         }
 
-        insertTreinoExercicioJuncoes(treinoExercicios); // Insert TreinoExercicio
-        insertDiasDaSemana(diasDaSemanaList); // Insert TreinoDiasDaSemana
+        insertTreinoExercicioJuncoes(treinoExercicios);
+        insertDiasDaSemana(diasDaSemanaList);
     }
 
     @Transaction
     default void updateTreinoWithExercicioAndDiasDaSemana(Treino treino) {
-        update(treino); // Update Treino
+        update(treino);
 
         long treinoId = treino.getId();
 
@@ -132,11 +129,11 @@ public interface TreinoDao {
             diasDaSemanaList.add(treinoDiasDaSemana);
         }
 
-        deleteTreinoExercicioJuncoesByTreinoId(treinoId); // Delete existing TreinoExercicio entries
-        insertTreinoExercicioJuncoes(treinoExercicios); // Insert updated TreinoExercicio entries
+        deleteTreinoExercicioJuncoesByTreinoId(treinoId);
+        insertTreinoExercicioJuncoes(treinoExercicios);
 
-        deleteDiasDaSemanaByTreinoId(treinoId); // Delete existing TreinoDiasDaSemana entries
-        insertDiasDaSemana(diasDaSemanaList); // Insert updated TreinoDiasDaSemana entries
+        deleteDiasDaSemanaByTreinoId(treinoId);
+        insertDiasDaSemana(diasDaSemanaList);
     }
 
     @Query("DELETE FROM treino_exercicio WHERE treinoId = :treinoId")

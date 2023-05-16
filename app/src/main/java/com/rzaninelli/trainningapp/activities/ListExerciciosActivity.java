@@ -68,39 +68,6 @@ public class ListExerciciosActivity extends AppCompatActivity {
                 listViewExercicios.setAdapter(exercicioAdapter);
             });
         });
-
-
-
-//        String[] nomes = getResources().getStringArray(R.array.nomes_exercicios);
-//        int[] gruposMusculares_posicao = getResources().getIntArray(R.array.grupos_musculares_exercicios);
-//        int[] equipamentosUtilizados_posicao = getResources().getIntArray(R.array.equipamentos_utilizados_exercicios);
-//        int[] dificuldades_posicao = getResources().getIntArray(R.array.dificuldades_exercicios);
-//        TypedArray imagensExercicios = getResources().obtainTypedArray(R.array.imagens_exercicios);
-//
-//        GrupoMuscularEnum[] gruposMusculares = GrupoMuscularEnum.values();
-//        EquipamentoUtilizado[] equipamentoUtilizados = EquipamentoUtilizado.values();
-//        Dificuldade[] dificuldades = Dificuldade.values();
-
-//        exercicios = new ArrayList<>();
-
-//        Exercicio exercicio;
-
-
-
-//        for (int cont = 0; cont < nomes.length; cont++) {
-//
-//            exercicio = new Exercicio();
-//            exercicio.setNome(nomes[cont]);
-//            exercicio.setGrupoMuscularEnum(gruposMusculares[gruposMusculares_posicao[cont]]);
-//            exercicio.setEquipamentoUtilizado(equipamentoUtilizados[equipamentosUtilizados_posicao[cont]]);
-//            exercicio.setDificuldade(dificuldades[dificuldades_posicao[cont]]);
-//            exercicio.setImagemExercicio(imagensExercicios.getDrawable(cont));
-//            exercicio.setImagemExercicioRef(cont);
-//
-//            exercicios.add(exercicio);
-//        }
-//        ExercicioAdapter exercicioAdapter = new ExercicioAdapter(this, exercicios);
-//        listViewExercicios.setAdapter(exercicioAdapter);
     }
 
     private void popularLista() {

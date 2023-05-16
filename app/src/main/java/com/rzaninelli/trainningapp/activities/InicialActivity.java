@@ -4,7 +4,6 @@ import static com.rzaninelli.trainningapp.activities.CadastroTreinoActivity.ALTE
 import static com.rzaninelli.trainningapp.activities.CadastroTreinoActivity.TREINO;
 
 import android.app.Activity;
-import android.arch.lifecycle.Observer;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -16,7 +15,6 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.view.ActionMode;
-import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -30,7 +28,6 @@ import com.rzaninelli.trainningapp.R;
 import com.rzaninelli.trainningapp.adapters.TreinoAdapter;
 import com.rzaninelli.trainningapp.entities.Exercicio;
 import com.rzaninelli.trainningapp.entities.Treino;
-import com.rzaninelli.trainningapp.entities.TreinoWithExercicios;
 import com.rzaninelli.trainningapp.entities.auxiliares.TreinoDiasDaSemana;
 import com.rzaninelli.trainningapp.entities.auxiliares.TreinoExercicio;
 import com.rzaninelli.trainningapp.persistence.TreinosDatabase;
@@ -89,11 +86,6 @@ public class InicialActivity extends AppCompatActivity {
         @Override
         public boolean onActionItemClicked(ActionMode mode, MenuItem menuItem) {
 
-
-//            AdapterView.AdapterContextMenuInfo info;
-//            info = (AdapterView.AdapterContextMenuInfo) menuItem.getMenuInfo();
-//            Treino treino = (Treino) listViewTreinoss.getItemAtPosition(info.position);
-
             switch (menuItem.getItemId()) {
 
                 case R.id.menuItemEditar:
@@ -133,7 +125,7 @@ public class InicialActivity extends AppCompatActivity {
         setContentView(R.layout.activity_inicial);
 
         listViewTreinoss = findViewById(R.id.listViewTreinos);
-        //// TODO: 15/05/2023 atention!!!!
+
         registerForContextMenu(listViewTreinoss);
 
         listViewTreinoss.setOnItemClickListener(
@@ -175,9 +167,6 @@ public class InicialActivity extends AppCompatActivity {
     }
 
     private void popularListaTreino() {
-//        treinos = new ArrayList<>();
-//        treinoAdapter = new TreinoAdapter(this, treinos);
-//        listViewTreinoss.setAdapter(treinoAdapter);
 
         AsyncTask.execute(() -> {
             treinosDatabase = TreinosDatabase.getDatabase(InicialActivity.this);
@@ -200,8 +189,6 @@ public class InicialActivity extends AppCompatActivity {
                 System.out.println("aqui");
             }
 
-//            treinos = (ArrayList<Treino>) treinosDatabase.treinoDao().getTreinos();
-
             InicialActivity.this.runOnUiThread(() -> {
                 treinoAdapter = new TreinoAdapter(this, treinos);
 
@@ -214,10 +201,6 @@ public class InicialActivity extends AppCompatActivity {
 
     private void alterarTreino(Treino treino) {
 
-//        treinosDatabase = TreinosDatabase.getDatabase(this);
-
-//        Treino treino = treinosDatabase.treinoDao().get(posicaoSelecionada);
-
         CadastroTreinoActivity.alterarTreino(this, treino);
     }
 
@@ -228,8 +211,6 @@ public class InicialActivity extends AppCompatActivity {
     private void excluirTreino(Treino treino) {
 
         String mensagem = getString(R.string.confirma_delete) + "\n" + treino.getNome();
-
-//        String mensagem = "Deseja realmente apagar treino?" + "\n" + treino.getNome();
 
         DialogInterface.OnClickListener listener = (dialog, which) -> {
 
@@ -243,8 +224,6 @@ public class InicialActivity extends AppCompatActivity {
                     treinos.remove(posicaoSelecionada);
                     System.out.println("aqui");
                     treinoAdapter.notifyDataSetChanged();
-
-//                    treinosDatabase.treinoDao().delete(treino);
 
                     break;
 
@@ -312,7 +291,6 @@ public class InicialActivity extends AppCompatActivity {
                         else
                             darkMode = false;
                         ativarDarkMode();
-//                        getApplicationContext().setTheme(R.style.Theme_TrainningApp);
                         salvarPreferenciaDarkMode();
                         Intent intent = getIntent();
                         finish();
@@ -375,37 +353,5 @@ public class InicialActivity extends AppCompatActivity {
 
         return super.onPrepareOptionsMenu(menu);
     }
-
-    //// TODO: 15/05/2023 -- trying
-    
-//    @Override
-//    public void onCreateContextMenu(ContextMenu menu, View v,
-//                                    ContextMenu.ContextMenuInfo menuInfo) {
-//        super.onCreateContextMenu(menu, v, menuInfo);
-//
-//        getMenuInflater().inflate(R.menu.exercicios_selecionados_menu_contexto, menu);
-//    }
-//
-//    @Override
-//    public boolean onContextItemSelected(@NonNull MenuItem item) {
-//        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-//        int position = info.position;
-//
-//        // Handle the selected menu item based on its ID
-//        switch (item.getItemId()) {
-//            case R.id.menuItemEditar:
-//                // Edit item
-//                return true;
-//
-//            case R.id.menuItemExcluir:
-//                // Delete item
-//                return true;
-//
-//            default:
-//                return super.onContextItemSelected(item);
-//        }
-//    }
-
-
 }
 

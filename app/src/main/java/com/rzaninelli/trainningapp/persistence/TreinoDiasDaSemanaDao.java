@@ -6,7 +6,6 @@ import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
 
 import com.rzaninelli.trainningapp.entities.auxiliares.TreinoDiasDaSemana;
-import com.rzaninelli.trainningapp.entities.auxiliares.TreinoExercicio;
 
 import java.util.List;
 

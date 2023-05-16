@@ -3,8 +3,6 @@ package com.rzaninelli.trainningapp.entities;
 import android.arch.persistence.room.Embedded;
 import android.arch.persistence.room.Relation;
 
-import com.rzaninelli.trainningapp.entities.auxiliares.TreinoExercicio;
-
 import java.util.List;
 
 public class TreinoWithExercicios {

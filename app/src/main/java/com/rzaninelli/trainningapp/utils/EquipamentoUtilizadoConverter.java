@@ -10,21 +10,6 @@ public class EquipamentoUtilizadoConverter {
     public static EquipamentoUtilizado toEquipamentoUtilizado(int indice) {
 
         return (EquipamentoUtilizado.values()[indice]);
-
-//        switch (value) {
-//            case "PESOCORPORAL":
-//                return EquipamentoUtilizado.PESOCORPORAL;
-//            case "HALTERES":
-//                return EquipamentoUtilizado.HALTERES;
-//            case "BARRA":
-//                return EquipamentoUtilizado.BARRA;
-//            case "CABO":
-//                return EquipamentoUtilizado.CABO;
-//            case "MAQUINAARTICULADA":
-//                return EquipamentoUtilizado.MAQUINAARTICULADA;
-//            default:
-//                throw new IllegalArgumentException("Invalid value for EquipamentoUtilizado: " + value);
-//        }
     }
 
     @TypeConverter
